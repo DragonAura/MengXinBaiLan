@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Skills.cpp" />
     <QtRcc Include="BaiLan.qrc" />
     <QtUic Include="BaiLan.ui" />
     <QtMoc Include="BaiLan.h" />
@@ -99,8 +100,8 @@
     <ClInclude Include="Battle.h" />
     <ClInclude Include="DEFINE.h" />
     <ClInclude Include="Explore.h" />
-    <ClInclude Include="Monster.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Unit.h" />
+    <ClInclude Include="Skills.h" />
     <ClInclude Include="total.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

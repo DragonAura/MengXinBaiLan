@@ -52,9 +52,12 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Skills.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Unit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Battle.h">
@@ -63,13 +66,13 @@
     <ClInclude Include="Explore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DEFINE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="total.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Skills.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
