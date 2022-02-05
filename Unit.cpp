@@ -11,3 +11,28 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	}
 	return skill;
 }
+
+Unit::Unit(int slotnumber, std::string namestring)//Unit的构造函数，效果为将Unit的技能槽清空，
+{
+	SkillSlot.clear();
+	SkillSlot.resize(slotnumber);
+	for (auto& item : SkillSlot)
+		item = nullptr;
+	EmptySlotNum = slotnumber;
+	name = namestring;
+}
+
+void Unit::AddSkill(Skill_ID id)
+{
+
+}
+
+void Unit::RemoveSkill(Skill_ID id)
+{
+
+}
+
+void Unit::UseSkill(int SlotofSkill)
+{
+
+}
