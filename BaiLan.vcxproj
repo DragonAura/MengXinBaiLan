@@ -85,8 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Monster.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Skills.cpp" />
     <QtRcc Include="BaiLan.qrc" />
     <QtUic Include="BaiLan.ui" />

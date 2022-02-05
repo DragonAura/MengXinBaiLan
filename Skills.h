@@ -2,6 +2,7 @@
 
 class Unit;
 
+//要求每次在此处添加新技能后都在Unit.cpp中的SkillAdder中增加新的case！
 enum Skill_ID//利用enum类型来枚举技能ID
 {
 	Skill_Example
@@ -12,7 +13,7 @@ class Skills
 
 public:
 	Skills(Skill_ID id, int level):skill_id(id),skill_level(level){}//构造技能的函数
-	~Skills(){}
+	virtual ~Skills(){}
 	virtual void InitSkill() = 0;//提供初始化接口
 	virtual void UseSkill() = 0;//提供释放接口
 
@@ -28,9 +29,11 @@ class SkillExample :public Skills
 public:
 	SkillExample(Skill_ID id, int level) :Skills(id, level) {}
 	~SkillExample() {}
-	void InitSkill();
-	void UseSkill();
+	void InitSkill() {}
+	void UseSkill() {}
 
 protected:
-	Unit SelectedTarget();
+	Unit SelectedTarget()
+	{
+	}
 };
