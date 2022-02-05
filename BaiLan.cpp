@@ -1,4 +1,4 @@
-#include "BaiLan.h"
+#include "total.h"
 
 BaiLan::BaiLan(QWidget *parent)
     : QWidget(parent)
