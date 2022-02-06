@@ -14,8 +14,8 @@ class Skills
 public:
 	Skills(Skill_ID id, int level):skill_id(id),skill_level(level){}//构造技能的函数
 	virtual ~Skills(){}
-	virtual void InitSkill() = 0;//提供初始化接口
-	virtual void UseSkill(const Unit&) = 0;//提供释放接口，技能的具体效果应当在UseSkill函数中完成
+	virtual void UseSkill(Unit&) = 0;//提供释放接口，技能的具体效果应当在UseSkill函数中完成
+	Skill_ID GetSkillID();
 
 protected:
 	Unit SelectedTarget;//选取所需释放技能的对象
@@ -29,7 +29,6 @@ class SkillExample :public Skills
 public:
 	SkillExample(Skill_ID id, int level) :Skills(id, level) {}
 	~SkillExample(){}
-	void InitSkill();
-	void UseSkill(const Unit&);
+	void UseSkill(Unit&);
 
 };
