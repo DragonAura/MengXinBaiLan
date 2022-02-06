@@ -10,12 +10,12 @@ enum Unit_ID//利用enum类型来枚举单位（怪物，玩家etc）ID
 
 Skills* SkillAdder(Skill_ID);//通过该函数返回一个技能指针
 
-class Unit
+class Unit//出于各种原因，建议在定义Unit的时候采用定义指针、new的方式来在主程序中存储，否则需要取地址，可读性相对较差
 {
 	
 public:
 
-	Unit() {}
+	Unit(){}
 	Unit(int,char*);//此处int确定一个Unit的技能槽数量
 	virtual ~Unit(){}
 

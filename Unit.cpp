@@ -6,8 +6,10 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	switch (id)
 	{
 	case Skill_Example:
-		skill = new SkillExample(Skill_Example, 1, 1);
+		skill = new SkillExample(1, 1);
 		break;
+	case Skill_Attack:
+		skill = new SkillAttack(1, 1);
 	}
 	return skill;
 }
@@ -22,6 +24,8 @@ Unit::Unit(int slotnumber, char* namestring)//Unit的构造函数，效果为将
 	experience = 0;
 	level = 1;
 	for (auto& item : SkillSlot)
+		item = nullptr;
+	for (auto& item : Opponent)
 		item = nullptr;
 	EmptySlotNum = slotnumber;
 	name = namestring;
@@ -91,5 +95,7 @@ int Unit::UseSkill(int SlotofSkill)
 		SkillSlot[SlotofSkill]->UseSkill(Opponent[i], OpponentNum);
 	OpponentNum = 0;
 	Opponent.clear();
+	for (auto& item : Opponent)
+		item = nullptr;
 	return NORMAL;
 }
