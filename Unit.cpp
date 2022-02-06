@@ -6,7 +6,7 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	switch (id)
 	{
 	case Skill_Example:
-		skill = new SkillExample(Skill_Example, 1);
+		skill = new SkillExample(Skill_Example, 1, 1);
 		break;
 	}
 	return skill;
@@ -16,12 +16,38 @@ Unit::Unit(int slotnumber, char* namestring)//Unit的构造函数，效果为将
 {
 	SkillSlot.clear();
 	SkillSlot.resize(slotnumber);
+	Opponent.clear();
+	Opponent.resize(5);
+	OpponentNum = 0;
 	experience = 0;
 	level = 1;
 	for (auto& item : SkillSlot)
 		item = nullptr;
 	EmptySlotNum = slotnumber;
 	name = namestring;
+}
+
+void Unit::ChangeHp(int hp)
+{
+	health += hp;
+	if (health < 0)health = 0;
+	if (health > 100)health = 100;
+}
+
+void Unit::ChangeAtk(int atk)
+{
+	attack += atk;
+	if (attack < 1)attack = 1;
+}
+
+void Unit::ChangeEXP(int exp)
+{
+	experience += exp;
+}
+
+void Unit::ChangeLvl(int lvl)
+{
+	level += lvl;
 }
 
 int Unit::AddSkill(Skill_ID id)
@@ -50,8 +76,20 @@ void Unit::RemoveSkill(Skill_ID id)
 		}
 }
 
-int Unit::UseSkill(int SlotofSkill, Unit& opponent)
+int Unit::AddOpponent(Unit* newopponent)
+{
+	if (OpponentNum >= 5) return ERROR;
+	Opponent[OpponentNum] = newopponent;
+	OpponentNum++;
+	return NORMAL;
+}
+
+int Unit::UseSkill(int SlotofSkill)
 {
 	if (SkillSlot[SlotofSkill] == nullptr) return ERROR;
-	SkillSlot[SlotofSkill]->UseSkill(opponent);
+	for (int i = 0; i < OpponentNum; i++)
+		SkillSlot[SlotofSkill]->UseSkill(Opponent[i], OpponentNum);
+	OpponentNum = 0;
+	Opponent.clear();
+	return NORMAL;
 }

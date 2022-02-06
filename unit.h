@@ -12,25 +12,36 @@ Skills* SkillAdder(Skill_ID);//通过该函数返回一个技能指针
 
 class Unit
 {
-	friend class Skills;//方便技能对Unit的health和attack进行调整修改
-
+	
 public:
+
 	Unit() {}
 	Unit(int,char*);//此处int确定一个Unit的技能槽数量
 	virtual ~Unit(){}
-	int AddSkill(Skill_ID);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用
-	void RemoveSkill(Skill_ID);//给定SkillID，删除Unit的技能
-	int UseSkill(int,Unit&);//每个技能被有其槽的位置，给定slot，使用对应的技能
+
+//技能相关的函数
+	int AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用
+	void RemoveSkill(Skill_ID id);//给定SkillID，删除Unit的技能
+	int UseSkill(int slot);//每个技能被有其槽的位置，给定slot，使用对应的技能
+	int AddOpponent(Unit* opponent);//释放技能之前要求先添加对象
+
+//更改数据相关的函数接口
+	void ChangeHp(int hp);//提供更改内部数据的接口，其中hp、atk可为负
+	void ChangeAtk(int atk);
+	void ChangeEXP(int exp);
+	void ChangeLvl(int lvl);
 
 protected:
-	int health;
-	int attack;
+	int health;//要求health至多为100
+	int attack;//要求attack至少为1
 	int experience;
 	int level;
 	char* name;
 	Unit_ID ID;
 	std::vector<Skills*>SkillSlot;//使用vector来记录一个Unit的技能
+	std::vector<Unit*>Opponent;//使用vector记录某次技能所锁定的对象
 	int EmptySlotNum;
+	int OpponentNum;
 
 };
 
