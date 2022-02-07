@@ -14,17 +14,19 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	return skill;
 }
 
-Unit::Unit(int slotnumber, char* namestring)//Unit的构造函数，效果为将Unit的技能槽清空，
+Unit::Unit(int slotnumber, char* namestring)//Unit的构造函数，效果为将Unit的技能槽清空，初始化各类数据
 {
 	SkillSlot.clear();
-	SkillSlot.resize(slotnumber);
+	SkillSlot.resize(slotnumber+1);
 	Opponent.clear();
 	Opponent.resize(5);
 	OpponentNum = 0;
 	experience = 0;
 	level = 1;
+	skillpoint = 100;
 	for (auto& item : SkillSlot)
 		item = nullptr;
+	AddSkill(Skill_Attack);
 	for (auto& item : Opponent)
 		item = nullptr;
 	EmptySlotNum = slotnumber;
@@ -35,7 +37,7 @@ void Unit::ChangeHp(int hp)
 {
 	health += hp;
 	if (health < 0)health = 0;
-	if (health > 100)health = 100;
+	if (health > MaxHP)health = MaxHP;
 }
 
 void Unit::ChangeAtk(int atk)
@@ -54,9 +56,19 @@ void Unit::ChangeLvl(int lvl)
 	level += lvl;
 }
 
+void Unit::ChangePosition(int x, int y, Map_ID map)
+{
+	X = x, Y = y, Map = map;
+}
+
+void Unit::ChangePosition(int x, int y)
+{
+	X += x, Y += y;
+}
+
 int Unit::AddSkill(Skill_ID id)
 {
-	if (EmptySlotNum == 0) return ERROR;//防止出现未知错误
+	if (EmptySlotNum == 0) return ERROR;//检测是否还有剩余的技能槽
 	Skills* newSkill = SkillAdder(id);
 	if (newSkill == nullptr) return ERROR;//检测输入id的合法性
 	for (auto& item : SkillSlot)
@@ -68,8 +80,9 @@ int Unit::AddSkill(Skill_ID id)
 	return NORMAL;
 }
 
-void Unit::RemoveSkill(Skill_ID id)
+int Unit::RemoveSkill(Skill_ID id)
 {
+	if (id == Skill_Attack)return ERROR;
 	for(auto& item:SkillSlot)
 		if (item != nullptr && item->GetSkillID() == id)
 		{
@@ -78,6 +91,7 @@ void Unit::RemoveSkill(Skill_ID id)
 			EmptySlotNum++;
 			break;
 		}
+	return NORMAL;
 }
 
 int Unit::AddOpponent(Unit* newopponent)
@@ -90,12 +104,14 @@ int Unit::AddOpponent(Unit* newopponent)
 
 int Unit::UseSkill(int SlotofSkill)
 {
-	if (SkillSlot[SlotofSkill] == nullptr) return ERROR;
+	if (SkillSlot[SlotofSkill] == nullptr) return ERROR;//检测选中的技能槽是否有技能
+	if (skillpoint < SkillSlot[SlotofSkill]->GetSP())return ERROR;//检测选中的技能是否有足够的SP释放
 	for (int i = 0; i < OpponentNum; i++)
 		SkillSlot[SlotofSkill]->UseSkill(Opponent[i], OpponentNum);
 	OpponentNum = 0;
 	Opponent.clear();
 	for (auto& item : Opponent)
 		item = nullptr;
+	skillpoint -= SkillSlot[SlotofSkill]->GetSP();
 	return NORMAL;
 }

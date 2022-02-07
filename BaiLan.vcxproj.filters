@@ -46,10 +46,10 @@
     <ClCompile Include="Explore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit.cpp">
+    <ClCompile Include="Skills.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Skills.cpp">
+    <ClCompile Include="Unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
