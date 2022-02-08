@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="BaiLan">
+    <qresource prefix="/image">
+        <file>grass.jpg</file>
     </qresource>
 </RCC>

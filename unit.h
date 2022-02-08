@@ -12,6 +12,7 @@ enum Unit_ID//利用enum类型来枚举单位（怪物，玩家etc）ID
 
 Skills* SkillAdder(Skill_ID id);//通过该函数返回一个技能指针
 
+//Unit类允许派生出新的Monster类，如果有相关需要的话
 class Unit//出于各种原因，建议在定义Unit的时候采用定义指针、new的方式来在主程序中存储，否则需要取地址，可读性相对较差
 {
 	
@@ -36,7 +37,7 @@ public:
 	void ChangeLvl(int lvl);
 
 //关于玩家移动的两种函数重载
-	void ChangePosition(int x, int y, Map_ID map);//切换地图时应当使用该函数，此时的xy为绝对位置
+	void ChangePosition(int x, int y, Map_ID map);//切换地图时或者初次定义时要求使用该函数，此时的xy为绝对位置
 	void ChangePosition(int x, int y);//不切换地图在同一地图移动时应当使用该函数，此时的xy为相对位移
 
 protected:
