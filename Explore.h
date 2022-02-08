@@ -24,10 +24,13 @@ public:
 	void MapInit();
 
 	Object_ID GetObject(int x, int y) { return Object[x][y]; }//提供外部获取地图内容的接口
-
+	Map_ID GetID() { return MapID; }
 
 protected:
+
 	Map_ID MapID;
 	Object_ID Object[MapXSize / BlockSize][MapYSize / BlockSize];//用来存储地图上所有位置的物体的具体内容
+
+	std::vector<Unit*> Monsters;//用于记录一张地图上的怪物数量
 
 };

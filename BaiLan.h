@@ -7,7 +7,13 @@
 #include<QGraphicsPixmapItem>
 #include "ui_BaiLan.h"
 
+enum Object_ID;
+enum Map_ID;
+
+class Explore;
 class Unit;
+
+QImage GetImg(Object_ID id);//返回某一Object的贴图
 
 class BaiLan : public QWidget
 {
@@ -16,9 +22,7 @@ class BaiLan : public QWidget
 public:
     BaiLan(QWidget *parent = Q_NULLPTR);
 
-    void LoadImage();//任何图片素材要求在类中添加新的QImage，然后在该函数中加载
-
-    void DrawMap();
+    void DrawMap();//该函数未检测数据合法性，要求自行注意以CurrentMap为ID的Explore类是否存在于Maps数组内
 
     void InitGame();
 
@@ -28,6 +32,7 @@ private:
 
     Unit* Player;
 
-    QImage ImgGrass;
+    Map_ID CurrentMap;
+    std::vector<Explore*> Maps;
 
 };
