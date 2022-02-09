@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include<QString>
+
 enum Skill_ID;
 
 enum Map_ID;
@@ -19,8 +21,9 @@ class Unit//出于各种原因，建议在定义Unit的时候采用定义指针�
 public:
 
 	Unit(){}
-	Unit(int,char*);//构造函数中具体会初始化的数据待定，可能会需要很多
+	Unit(int hp,int atk,int exp,int lvl,Unit_ID id,int slotnumber);//构造函数中具体会初始化的数据待定，可能会需要很多
 	virtual ~Unit(){}
+	void SetName(QString name_) { name = name_; }
 
 //对外提供数值的函数
 	Unit_ID GetID() { return ID; }
@@ -50,7 +53,7 @@ protected:
 	int skillpoint;//要求skillpoint至少为0，至多为200
 	int experience;
 	int level;
-	char* name;
+	QString name;
 	Unit_ID ID;
 	std::vector<Skills*>SkillSlot;//使用vector来记录一个Unit所具有的技能
 	std::vector<Unit*>Opponent;//使用vector记录某次技能所锁定的对象

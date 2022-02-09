@@ -5,6 +5,7 @@
 #include<QGraphicsView>
 #include<QPixmap>
 #include<QGraphicsPixmapItem>
+#include<QInputDialog>
 #include "ui_BaiLan.h"
 
 enum Object_ID;

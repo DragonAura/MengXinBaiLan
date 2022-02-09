@@ -14,23 +14,25 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	return skill;
 }
 
-Unit::Unit(int slotnumber, char* namestring)//Unit的构造函数，效果为将Unit的技能槽清空，初始化各类数据
+Unit::Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber)//Unit的构造函数，效果为将Unit初始化；位置没有专门初始化，需要在构造之后手动设置
 {
 	SkillSlot.clear();
 	SkillSlot.resize(slotnumber+1);
 	Opponent.clear();
 	Opponent.resize(5);
 	OpponentNum = 0;
-	experience = 0;
-	level = 1;
+	MaxHP = hp;
+	health = hp;
+	experience = exp;
+	level = lvl;
 	skillpoint = 100;
+	ID = id;
 	for (auto& item : SkillSlot)
 		item = nullptr;
 	AddSkill(Skill_Attack);
 	for (auto& item : Opponent)
 		item = nullptr;
 	EmptySlotNum = slotnumber;
-	name = namestring;
 }
 
 void Unit::ChangeHp(int hp)

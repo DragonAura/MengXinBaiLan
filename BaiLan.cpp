@@ -30,9 +30,15 @@ QImage GetUnitImg(Unit_ID id)
     return Image;
 }
 
-BaiLan::BaiLan(QWidget *parent)
+BaiLan::BaiLan(QWidget* parent)
     : QWidget(parent)
 {
+    Player = new Unit(100, 1, 0, 1, Unit_Player, 4);
+    bool ok = false;
+    QString playername;
+    while (!ok||playername.isEmpty())
+        playername = QInputDialog::getText(this, tr("请输入你的名字"), tr("你的名字："), QLineEdit::Normal, 0, &ok);
+    Player->SetName(playername);
     ui.setupUi(this);
 }
 
