@@ -6,8 +6,8 @@ enum Map_ID;
 
 enum Unit_ID//利用enum类型来枚举单位（怪物，玩家etc）ID
 {
-	Player,
-	Monster_Example
+	Unit_Player,
+	Unit_Monster_Example
 };
 
 Skills* SkillAdder(Skill_ID id);//通过该函数返回一个技能指针
@@ -22,7 +22,10 @@ public:
 	Unit(int,char*);//构造函数中具体会初始化的数据待定，可能会需要很多
 	virtual ~Unit(){}
 
+//对外提供数值的函数
 	Unit_ID GetID() { return ID; }
+	int GetX() { return X; }
+	int GetY() { return Y; }
 
 //技能相关的函数
 	int AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用
@@ -53,7 +56,7 @@ protected:
 	std::vector<Unit*>Opponent;//使用vector记录某次技能所锁定的对象
 	int EmptySlotNum;
 	int OpponentNum;
-	int X, Y;//记录某Unit在当前地图的XY位置
+	int X, Y;//记录某Unit在当前地图的XY位置，应当以Pixel（即960x960）记录，而非Block记录
 	Map_ID Map;//记录Unit当前所在的地图
 
 };

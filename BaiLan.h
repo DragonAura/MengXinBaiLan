@@ -9,11 +9,13 @@
 
 enum Object_ID;
 enum Map_ID;
+enum Unit_ID;
 
 class Explore;
 class Unit;
 
-QImage GetImg(Object_ID id);//返回某一Object的贴图
+QImage GetObjImg(Object_ID id);//返回某一Object的贴图
+QImage GetUnitImg(Unit_ID id);//返回某一Unit的贴图
 
 class BaiLan : public QWidget
 {
@@ -22,6 +24,7 @@ class BaiLan : public QWidget
 public:
     BaiLan(QWidget *parent = Q_NULLPTR);
 
+    void AddMap(Map_ID id);
     void DrawMap();//该函数未检测数据合法性，要求自行注意以CurrentMap为ID的Explore类是否存在于Maps数组内
 
     void InitGame();

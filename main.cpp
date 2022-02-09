@@ -6,6 +6,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     BaiLan w;
     w.InitGame();
+    w.DrawMap();
     w.show();
     return a.exec();
 }

@@ -14,14 +14,19 @@ enum Object_ID//记录地图上可能出现的物体
 
 class Unit;//对Unit类做声明
 
+Explore* MapGenerator(Map_ID id);
+
 class Explore//由Explore类派生出不同的Explore_Map（若有需要）
 {
 public:
+
+	Explore(Map_ID id);
+	~Explore() {}
 //关于设置地图的两种函数重载
 	void SetObject(int x1, int y1, int x2, int y2, Object_ID id);
 	void SetObject(int x, int y, Object_ID id);
 
-	void MapInit();
+	//void MapInit();
 
 	Object_ID GetObject(int x, int y) { return Object[x][y]; }//提供外部获取地图内容的接口
 	Map_ID GetID() { return MapID; }
