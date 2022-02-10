@@ -24,7 +24,7 @@ QImage GetUnitImg(Unit_ID id)
     switch (id)
     {
     case Unit_Player:
-        Image.load(":/image/player.jpg");
+        Image.load(":/image/player.png");
         break;
     }
     return Image;
@@ -39,6 +39,7 @@ BaiLan::BaiLan(QWidget* parent)
     while (!ok||playername.isEmpty())
         playername = QInputDialog::getText(this, tr("请输入你的名字"), tr("你的名字："), QLineEdit::Normal, 0, &ok);
     Player->SetName(playername);
+    Player->ChangePosition(480, 480, Map_MAP1);
     ui.setupUi(this);
 }
 
