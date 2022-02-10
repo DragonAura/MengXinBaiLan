@@ -33,14 +33,44 @@ QImage GetUnitImg(Unit_ID id)
 BaiLan::BaiLan(QWidget* parent)
     : QWidget(parent)
 {
-    Player = new Unit(100, 1, 0, 1, Unit_Player, 4);
-    bool ok = false;
-    QString playername;
-    while (!ok||playername.isEmpty())
-        playername = QInputDialog::getText(this, tr("请输入你的名字"), tr("你的名字："), QLineEdit::Normal, 0, &ok);
-    Player->SetName(playername);
-    Player->ChangePosition(480, 480, Map_MAP1);
     ui.setupUi(this);
+    InitGame();
+    time = new QTimer();
+    time->setInterval(16);
+    connect(time, SIGNAL(timeout()), this, SLOT(PlayerMovement()));
+    time->start();
+}
+
+void BaiLan::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_W ||
+        event->key() == Qt::Key_Up)
+        Key_W = true;
+    if (event->key() == Qt::Key_A ||
+        event->key() == Qt::Key_Left)
+        Key_A = true;
+    if (event->key() == Qt::Key_S ||
+        event->key() == Qt::Key_Down)
+        Key_S = true;
+    if (event->key() == Qt::Key_D ||
+        event->key() == Qt::Key_Right)
+        Key_D = true;
+}
+
+void BaiLan::keyReleaseEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_W ||
+        event->key() == Qt::Key_Up)
+        Key_W = false;
+    if (event->key() == Qt::Key_A ||
+        event->key() == Qt::Key_Left)
+        Key_A = false;
+    if (event->key() == Qt::Key_S ||
+        event->key() == Qt::Key_Down)
+        Key_S = false;
+    if (event->key() == Qt::Key_D ||
+        event->key() == Qt::Key_Right)
+        Key_D = false;
 }
 
 void BaiLan::AddMap(Map_ID id)
@@ -95,5 +125,25 @@ void BaiLan::InitGame()
 {
     CurrentMap = Map_MAP1;
     AddMap(Map_MAP1);
+    Player = new Unit(100, 1, 0, 1, Unit_Player, 4);
+    bool ok = false;
+    QString playername;
+    while (!ok || playername.isEmpty())
+        playername = QInputDialog::getText(this, tr("请输入你的名字"), tr("你的名字："), QLineEdit::Normal, 0, &ok);
+    Player->SetName(playername);
+    Player->ChangePosition(480, 480, Map_MAP1);
+    this->grabKeyboard();
+    setFocusPolicy(Qt::StrongFocus);
+    DrawMap();
+}
 
+void BaiLan::PlayerMovement()
+{
+    //static int i = 32;
+    //ui.testlabel->setNum(i++);
+    if (Key_W == true)Player->ChangePosition(0, -5);
+    if (Key_A == true)Player->ChangePosition(-5, 0);
+    if (Key_S == true)Player->ChangePosition(0, 5);
+    if (Key_D == true)Player->ChangePosition(5, 0);
+    DrawMap();
 }

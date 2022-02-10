@@ -35,6 +35,19 @@
     </rect>
    </property>
   </widget>
+  <widget class="QLabel" name="testlabel">
+   <property name="geometry">
+    <rect>
+     <x>1200</x>
+     <y>260</y>
+     <width>54</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>test</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
