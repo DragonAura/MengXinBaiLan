@@ -8,6 +8,9 @@ QImage GetObjImg(Object_ID id)
     case Object_GRASS:
         Image.load(":/image/grass.jpg");
         break;
+    case Object_WALL:
+        Image.load(":/image/wall.jpg");
+        break;
     case Object_AIR:
         Image.load(":/image/air.jpg");
         break;
@@ -36,9 +39,10 @@ BaiLan::BaiLan(QWidget* parent)
     ui.setupUi(this);
     InitGame();
     time = new QTimer();
-    time->setInterval(16);
+    time->setInterval(1000/FPS);
     connect(time, SIGNAL(timeout()), this, SLOT(PlayerMovement()));
     time->start();
+    
 }
 
 void BaiLan::keyPressEvent(QKeyEvent* event)
@@ -86,40 +90,34 @@ void BaiLan::DrawMap()//画出以CurrentMap为ID的地图
         if (Maps[i]->GetID() == CurrentMap)
             break;
     Explore* Map = Maps[i];
-    for (int i = 0; i < MapXSize / BlockSize; i++)
-        for (int j = 0; j < MapYSize / BlockSize; j++)
+    for (int i = 0; i < MapXSize/BlockSize; i++)
+        for (int j = 0; j < MapYSize/BlockSize; j++)
         {
             QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
             item->setPixmap(QPixmap::fromImage(GetObjImg(Map->GetObject(i, j))));
             item->setPos(QPointF(i * BlockSize, j * BlockSize));
             scene->addItem(item);
         }
-    {
-        QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
-        item->setPixmap(QPixmap::fromImage(GetUnitImg(Unit_Player)));
-        item->setPos(QPointF(Player->GetX(), Player->GetY()));
-        item->setZValue(1);
-        scene->addItem(item);
-    }
+    //{
+    //    QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
+    //    item->setPixmap(QPixmap::fromImage(GetUnitImg(Unit_Player)));
+    //    item->setPos(QPointF(Player->GetX(), Player->GetY()));
+    //    item->setZValue(1);
+    //    scene->addItem(item);
+    //}
     ui.GraphicsView->setScene(scene);
-    //ui.GraphicsView->show();
 }
 
-//这是首次测试绘图时使用的版本，和正式版本有较大的差异
-//void BaiLan::DrawMap()
-//{
-//    QGraphicsScene* scene = new QGraphicsScene;
-//    for (int i = 0; i < MapXSize / BlockSize; i++)
-//        for (int j = 0; j < MapYSize / BlockSize; j++)
-//        {
-//            QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
-//            item->setPixmap(QPixmap::fromImage(ImgGrass));
-//            item->setPos(QPointF(i * BlockSize, j * BlockSize));
-//            scene->addItem(item);
-//        }
-//    ui.GraphicsView->setScene(scene);
-//    //ui.GraphicsView->show();
-//}
+void BaiLan::DrawUnit()
+{
+    QGraphicsScene* scene = new QGraphicsScene;
+    QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
+    item->setPixmap(QPixmap::fromImage(GetUnitImg(Unit_Player)));
+    item->setPos(QPointF(Player->GetX(), Player->GetY()));
+    scene->addItem(item);
+    scene->setSceneRect(0, 0, 960, 960);
+    ui.UnitView->setScene(scene);
+}
 
 void BaiLan::InitGame()
 {
@@ -133,17 +131,19 @@ void BaiLan::InitGame()
     Player->SetName(playername);
     Player->ChangePosition(480, 480, Map_MAP1);
     this->grabKeyboard();
+    ui.UnitView->setStyleSheet("background: transparent;border:0px");
     setFocusPolicy(Qt::StrongFocus);
     DrawMap();
+    DrawUnit();
 }
 
 void BaiLan::PlayerMovement()
 {
-    //static int i = 32;
-    //ui.testlabel->setNum(i++);
-    if (Key_W == true)Player->ChangePosition(0, -5);
-    if (Key_A == true)Player->ChangePosition(-5, 0);
-    if (Key_S == true)Player->ChangePosition(0, 5);
-    if (Key_D == true)Player->ChangePosition(5, 0);
-    DrawMap();
+    static int i = 0;
+    ui.testlabel->setNum(i++);
+    if (Key_W == true)Player->ChangePosition(0, -2);
+    if (Key_A == true)Player->ChangePosition(-2, 0);
+    if (Key_S == true)Player->ChangePosition(0, 2);
+    if (Key_D == true)Player->ChangePosition(2, 0);
+    DrawUnit();
 }

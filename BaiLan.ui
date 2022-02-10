@@ -48,6 +48,16 @@
     <string>test</string>
    </property>
   </widget>
+  <widget class="QGraphicsView" name="UnitView">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>1000</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

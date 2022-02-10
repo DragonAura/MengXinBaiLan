@@ -2,5 +2,6 @@
     <qresource prefix="/image">
         <file>grass.jpg</file>
         <file>player.png</file>
+        <file>wall.jpg</file>
     </qresource>
 </RCC>

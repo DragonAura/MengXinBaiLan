@@ -31,7 +31,12 @@ public:
     void keyReleaseEvent(QKeyEvent* event);
 
     void AddMap(Map_ID id);
+
+//该函数作用为画出不可移动的部分
     void DrawMap();//该函数未检测数据合法性，要求自行注意以CurrentMap为ID的Explore类是否存在于Maps数组内
+
+//该函数作用为画出可以移动的部分
+    void DrawUnit();
 
     void InitGame();
 
