@@ -39,7 +39,7 @@ BaiLan::BaiLan(QWidget* parent)
     ui.setupUi(this);
     InitGame();
     time = new QTimer();
-    time->setInterval(1000/FPS);
+    time->setInterval(16);
     connect(time, SIGNAL(timeout()), this, SLOT(PlayerMovement()));
     time->start();
     
@@ -137,13 +137,49 @@ void BaiLan::InitGame()
     DrawUnit();
 }
 
+bool BaiLan::Test_Wall(Direction dir)
+{
+    int i;
+    for (i = 0; i < Maps.size(); i++)
+        if (Maps[i]->GetID() == CurrentMap)
+            break;
+    Explore* Map = Maps[i];
+    bool result = false;
+    switch (dir)
+    {
+    case Up:
+        result = Map->GetObject(Player->GetX() / BlockSize, (Player->GetY() - 2) / BlockSize) == Object_WALL ||
+            Map->GetObject(Player->GetX() / BlockSize + 1, (Player->GetY() - 2) / BlockSize) == Object_WALL ?
+            true : false;
+        break;
+    case Left:
+        result = Map->GetObject((Player->GetX() - 2) / BlockSize, Player->GetY() / BlockSize) == Object_WALL ||
+            Map->GetObject((Player->GetX() - 2) / BlockSize, Player->GetY() / BlockSize + 1) == Object_WALL ||
+            Map->GetObject((Player->GetX() - 2) / BlockSize, Player->GetY() / BlockSize + 2) == Object_WALL ?
+            true : false;
+        break;
+    case Down:
+        result = Map->GetObject(Player->GetX() / BlockSize, (Player->GetY() + PlayerYSize + 2) / BlockSize) == Object_WALL ||
+            Map->GetObject(Player->GetX() / BlockSize + 1, (Player->GetY() + PlayerYSize + 2) / BlockSize) == Object_WALL ?
+            true : false;
+        break;
+    case Right:
+        result = Map->GetObject((Player->GetX() + PlayerXSize + 2) / BlockSize, Player->GetY() / BlockSize) == Object_WALL ||
+            Map->GetObject((Player->GetX() + PlayerXSize + 2) / BlockSize, Player->GetY() / BlockSize + 1) == Object_WALL ||
+            Map->GetObject((Player->GetX() + PlayerXSize + 2) / BlockSize, Player->GetY() / BlockSize + 2) == Object_WALL ?
+            true : false;
+        break;
+    }
+    return result;
+}
+
 void BaiLan::PlayerMovement()
 {
-    static int i = 0;
+    static int i=0;
     ui.testlabel->setNum(i++);
-    if (Key_W == true)Player->ChangePosition(0, -2);
-    if (Key_A == true)Player->ChangePosition(-2, 0);
-    if (Key_S == true)Player->ChangePosition(0, 2);
-    if (Key_D == true)Player->ChangePosition(2, 0);
+    if (Key_W == true && Test_Wall(Up) == false)Player->ChangePosition(0, -2);
+    if (Key_A == true && Test_Wall(Left) == false)Player->ChangePosition(-2, 0);
+    if (Key_S == true && Test_Wall(Down) == false)Player->ChangePosition(0, 2);
+    if (Key_D == true && Test_Wall(Right) == false)Player->ChangePosition(2, 0);
     DrawUnit();
 }

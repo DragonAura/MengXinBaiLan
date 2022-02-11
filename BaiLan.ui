@@ -45,7 +45,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>test</string>
+    <string>FPS:59</string>
    </property>
   </widget>
   <widget class="QGraphicsView" name="UnitView">

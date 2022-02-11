@@ -14,6 +14,14 @@ enum Object_ID;
 enum Map_ID;
 enum Unit_ID;
 
+enum Direction
+{
+    Up,
+    Left,
+    Down,
+    Right
+};
+
 class Explore;
 class Unit;
 
@@ -41,6 +49,8 @@ public:
     void InitGame();
 
 private:
+
+    bool Test_Wall(Direction dir);
 
     bool Key_W = false;
     bool Key_A = false;

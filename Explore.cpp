@@ -18,6 +18,7 @@ Explore* MapGenerator(Map_ID id)
 		map->SetObject(1, 1, 1, 40, Object_WALL);
 		map->SetObject(40, 40, 40, 1, Object_WALL);
 		map->SetObject(40, 40, 1, 40, Object_WALL);
+		map->SetObject(20, 20, Object_WALL);
 		break;
 	}
 	return map;
