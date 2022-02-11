@@ -3,5 +3,6 @@
         <file>grass.jpg</file>
         <file>player.png</file>
         <file>wall.jpg</file>
+        <file>Enemy_Demon.png</file>
     </qresource>
 </RCC>

@@ -6,8 +6,9 @@
 #include<QPixmap>
 #include<QGraphicsPixmapItem>
 #include<QInputDialog>
-#include <QKeyEvent>
+#include<QKeyEvent>
 #include<QTimer>
+#include<QtOpenGLWidgets/qopenglwidget.h>
 #include "ui_BaiLan.h"
 
 enum Object_ID;

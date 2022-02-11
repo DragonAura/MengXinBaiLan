@@ -29,9 +29,12 @@ public:
 	void SetObject(int x1, int y1, int x2, int y2, Object_ID id);//x,y的范围为1-40
 	void SetObject(int x, int y, Object_ID id);
 
-	//void MapInit();
-
-	Object_ID GetObject(int x, int y) { return Object[x][y]; }//提供外部获取地图内容的接口
+//设置敌人的函数
+	void AddEnemy(int x, int y, Map_ID map, Unit_ID id, int hp, int atk, int exp, int lvl, int skillnum);
+	
+//提供外部获取地图内容的接口
+	Object_ID GetObject(int x, int y) { return Object[x][y]; }
+	std::vector<Unit*> GetEnemies() { return Enemies; }
 	Map_ID GetID() { return MapID; }
 
 protected:
@@ -39,6 +42,6 @@ protected:
 	Map_ID MapID;
 	Object_ID Object[MapXSize / BlockSize][MapYSize / BlockSize];//用来存储地图上所有位置的物体的具体内容
 
-	std::vector<Unit*> Monsters;//用于记录一张地图上有什么怪物
+	std::vector<Unit*> Enemies;//用于记录一张地图上有什么怪物
 
 };

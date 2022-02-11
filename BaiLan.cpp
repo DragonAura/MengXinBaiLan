@@ -29,6 +29,9 @@ QImage GetUnitImg(Unit_ID id)
     case Unit_Player:
         Image.load(":/image/player.png");
         break;
+    case Unit_Enemy_Demon:
+        Image.load(":/image/Enemy_Demon.png");
+        break;
     }
     return Image;
 }
@@ -98,13 +101,14 @@ void BaiLan::DrawMap()//画出以CurrentMap为ID的地图
             item->setPos(QPointF(i * BlockSize, j * BlockSize));
             scene->addItem(item);
         }
-    //{
-    //    QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
-    //    item->setPixmap(QPixmap::fromImage(GetUnitImg(Unit_Player)));
-    //    item->setPos(QPointF(Player->GetX(), Player->GetY()));
-    //    item->setZValue(1);
-    //    scene->addItem(item);
-    //}
+    for (auto item : Map->GetEnemies())
+    {
+        QGraphicsPixmapItem* pixitem = new QGraphicsPixmapItem;
+        pixitem->setPixmap(QPixmap::fromImage(GetUnitImg(item->GetID())));
+        pixitem->setZValue(1);
+        pixitem->setPos(QPointF(item->GetX(), item->GetY()));
+        scene->addItem(pixitem);
+    }
     ui.GraphicsView->setScene(scene);
 }
 

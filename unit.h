@@ -9,7 +9,7 @@ enum Map_ID;
 enum Unit_ID//利用enum类型来枚举单位（怪物，玩家etc）ID
 {
 	Unit_Player,
-	Unit_Monster_Example
+	Unit_Enemy_Demon
 };
 
 Skills* SkillAdder(Skill_ID id);//通过该函数返回一个技能指针

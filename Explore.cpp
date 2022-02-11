@@ -19,6 +19,7 @@ Explore* MapGenerator(Map_ID id)
 		map->SetObject(40, 40, 40, 1, Object_WALL);
 		map->SetObject(40, 40, 1, 40, Object_WALL);
 		map->SetObject(20, 20, Object_WALL);
+		map->AddEnemy(300, 300, Map_MAP1, Unit_Enemy_Demon, 20, 1, 20, 1, 0);
 		break;
 	}
 	return map;
@@ -30,6 +31,13 @@ Explore::Explore(Map_ID id)
 	for (int i = 0; i < MapXSize / BlockSize; i++)
 		for (int j = 0; j < MapYSize / BlockSize; j++)
 			Object[i][j] = Object_GRASS;
+}
+
+void Explore::AddEnemy(int x, int y, Map_ID map, Unit_ID id,int hp,int atk,int exp,int lvl,int skillnum)
+{
+	Unit* enemy = new Unit(hp, atk, exp, lvl, id, skillnum);
+	enemy->ChangePosition(x, y, map);
+	Enemies.push_back(enemy);
 }
 
 void Explore::SetObject(int x1, int y1, int x2, int y2, Object_ID id)
