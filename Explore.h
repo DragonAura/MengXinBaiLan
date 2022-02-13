@@ -23,6 +23,7 @@ class Explore//由Explore类派生出不同的Explore_Map（若有需要）
 {
 public:
 
+	Explore(){}
 	Explore(Map_ID id);
 	~Explore() {}
 //关于设置地图的两种函数重载
@@ -31,6 +32,7 @@ public:
 
 //设置敌人的函数
 	void AddEnemy(int x, int y, Map_ID map, Unit_ID id, int hp, int atk, int exp, int lvl, int skillnum);
+	void KillEnemey(int x, int y);
 	
 //提供外部获取地图内容的接口
 	Object_ID GetObject(int x, int y) { return Object[x][y]; }

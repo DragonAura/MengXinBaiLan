@@ -123,6 +123,62 @@ void BaiLan::DrawUnit()
     ui.UnitView->setScene(scene);
 }
 
+bool BaiLan::EncounterEnemy()
+{
+    Explore* Map = new Explore;
+    for (auto item : Maps)
+        if (item->GetID() == CurrentMap)
+        {
+            Map = item;
+            break;
+        }
+    for (auto item : Map->GetEnemies())
+        if (Player->GetX() <= item->GetX() + PlayerXSize && Player->GetX() >= item->GetX() - PlayerXSize &&
+            Player->GetY() <= item->GetY() + PlayerYSize && Player->GetY() >= item->GetY() - PlayerYSize)
+        {
+            EnemyX = item->GetX();
+            EnemyY = item->GetY();
+            return true;
+        }
+    EnemyX = -9999;
+    EnemyY = -9999;
+    return false;
+}
+
+void BaiLan::Battle()
+{
+    Explore* Map = new Explore;
+    for (auto item : Maps)
+        if (item->GetID() == CurrentMap)
+        {
+            Map = item;
+            break;
+        }
+    Unit* Enemy = new Unit;
+    for(auto item:Map->GetEnemies())
+        if (item->GetX() == EnemyX && item->GetY() == EnemyY)
+        {
+            Enemy = item;
+            break;
+        }
+    //此处应当new一个Battle类，由于还没写，暂时跳过
+    ui.testlabel->setText("遇敌！");
+    if (PlayerWin)
+        KillEnemy();
+}
+
+void BaiLan::KillEnemy()
+{
+    for (auto item : Maps)
+        if (item->GetID() == CurrentMap)
+        {
+            item->KillEnemey(EnemyX, EnemyY);
+            EnemyX = -9999, EnemyY = -9999;
+            DrawMap();
+            return;
+        }
+}
+
 void BaiLan::InitGame()
 {
     CurrentMap = Map_MAP1;
@@ -179,11 +235,13 @@ bool BaiLan::Test_Wall(Direction dir)
 
 void BaiLan::PlayerMovement()
 {
-    static int i=0;
-    ui.testlabel->setNum(i++);
+    //static int i=0;
+    //ui.testlabel->setNum(i++);
     if (Key_W == true && Test_Wall(Up) == false)Player->ChangePosition(0, -2);
     if (Key_A == true && Test_Wall(Left) == false)Player->ChangePosition(-2, 0);
     if (Key_S == true && Test_Wall(Down) == false)Player->ChangePosition(0, 2);
     if (Key_D == true && Test_Wall(Right) == false)Player->ChangePosition(2, 0);
     DrawUnit();
+    if (EncounterEnemy())
+        Battle();
 }

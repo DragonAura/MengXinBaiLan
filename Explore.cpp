@@ -40,6 +40,18 @@ void Explore::AddEnemy(int x, int y, Map_ID map, Unit_ID id,int hp,int atk,int e
 	Enemies.push_back(enemy);
 }
 
+void Explore::KillEnemey(int x, int y)
+{
+	std::vector<Unit*>::iterator it;
+	for (it = Enemies.begin(); it != Enemies.end(); it++)
+		if ((*it)->GetX() == x && (*it)->GetY() == y)
+		{
+			Enemies.erase(it);
+			break;
+		}
+			
+}
+
 void Explore::SetObject(int x1, int y1, int x2, int y2, Object_ID id)
 {
 	standard(x1, x2);

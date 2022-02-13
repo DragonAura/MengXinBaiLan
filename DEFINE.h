@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ERRORR -1
+#define ERROR -1
 #define NORMAL 0
 #define MapXSize 960//定义地图长度
 #define MapYSize 960//定义地图宽度

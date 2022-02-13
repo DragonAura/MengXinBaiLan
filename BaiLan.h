@@ -8,7 +8,6 @@
 #include<QInputDialog>
 #include<QKeyEvent>
 #include<QTimer>
-#include<QtOpenGLWidgets/qopenglwidget.h>
 #include "ui_BaiLan.h"
 
 enum Object_ID;
@@ -47,9 +46,15 @@ public:
 //该函数作用为画出可以移动的部分
     void DrawUnit();
 
+    bool EncounterEnemy();
+    void Battle();
+    void KillEnemy();
+
     void InitGame();
 
 private:
+
+    bool PlayerWin = true;
 
     bool Test_Wall(Direction dir);
 
@@ -59,6 +64,8 @@ private:
     bool Key_D = false;
 
     Ui::BaiLanClass ui;
+
+    int EnemyX=-9999, EnemyY=-9999;//记录正在发生战斗的敌人的位置
 
     Unit* Player;
 

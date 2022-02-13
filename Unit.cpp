@@ -70,9 +70,9 @@ void Unit::ChangePosition(int x, int y)
 
 int Unit::AddSkill(Skill_ID id)
 {
-	if (EmptySlotNum == 0) return ERRORR;//检测是否还有剩余的技能槽
+	if (EmptySlotNum == 0) return ERROR;//检测是否还有剩余的技能槽
 	Skills* newSkill = SkillAdder(id);
-	if (newSkill == nullptr) return ERRORR;//检测输入id的合法性
+	if (newSkill == nullptr) return ERROR;//检测输入id的合法性
 	for (auto item : SkillSlot)
 		if (item == nullptr)
 		{
@@ -84,7 +84,7 @@ int Unit::AddSkill(Skill_ID id)
 
 int Unit::RemoveSkill(Skill_ID id)
 {
-	if (id == Skill_Attack)return ERRORR;
+	if (id == Skill_Attack)return ERROR;
 	for(auto item:SkillSlot)
 		if (item != nullptr && item->GetSkillID() == id)
 		{
@@ -98,7 +98,7 @@ int Unit::RemoveSkill(Skill_ID id)
 
 int Unit::AddOpponent(Unit* newopponent)
 {
-	if (OpponentNum >= 5) return ERRORR;
+	if (OpponentNum >= 5) return ERROR;
 	Opponent[OpponentNum] = newopponent;
 	OpponentNum++;
 	return NORMAL;
@@ -106,8 +106,8 @@ int Unit::AddOpponent(Unit* newopponent)
 
 int Unit::UseSkill(int SlotofSkill)
 {
-	if (SkillSlot[SlotofSkill] == nullptr) return ERRORR;//检测选中的技能槽是否有技能
-	if (skillpoint < SkillSlot[SlotofSkill]->GetSP())return ERRORR;//检测选中的技能是否有足够的SP释放
+	if (SkillSlot[SlotofSkill] == nullptr) return ERROR;//检测选中的技能槽是否有技能
+	if (skillpoint < SkillSlot[SlotofSkill]->GetSP())return ERROR;//检测选中的技能是否有足够的SP释放
 	for (int i = 0; i < OpponentNum; i++)
 		SkillSlot[SlotofSkill]->UseSkill(Opponent[i], OpponentNum);
 	OpponentNum = 0;
