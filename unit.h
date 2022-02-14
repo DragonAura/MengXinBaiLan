@@ -2,6 +2,8 @@
 
 #include<QString>
 
+class Battle;
+
 enum Skill_ID;
 
 enum Map_ID;
@@ -29,6 +31,7 @@ public:
 	Unit_ID GetID() { return ID; }
 	int GetX() { return X; }
 	int GetY() { return Y; }
+	int GetHP() { return health; }
 
 //技能相关的函数
 	int AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用
@@ -46,6 +49,8 @@ public:
 	void ChangePosition(int x, int y, Map_ID map);//切换地图时或者初次定义时要求使用该函数，此时的xy为绝对位置
 	void ChangePosition(int x, int y);//不切换地图在同一地图移动时应当使用该函数，此时的xy为相对位移
 
+	int BattleX, BattleY;//记录某Unit在当前Battle地图的XY位置，应当以Block（24x24）记录
+
 protected:
 	int MaxHP;
 	int health;//要求health至多为MaxHP
@@ -59,7 +64,7 @@ protected:
 	std::vector<Unit*>Opponent;//使用vector记录某次技能所锁定的对象
 	int EmptySlotNum;
 	int OpponentNum;
-	int X, Y;//记录某Unit在当前地图的XY位置，应当以Pixel（即960x960）记录，而非Block记录
+	int X, Y;//记录某Unit在当前Explore地图的XY位置，应当以Pixel（即960x960）记录，而非Block记录
 	Map_ID Map;//记录Unit当前所在的地图
 
 };

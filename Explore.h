@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include"DEFINE.h"
+
 enum Map_ID//记录所有的地图
 {
 	Map_MAP1

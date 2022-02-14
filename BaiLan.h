@@ -37,6 +37,7 @@ public:
 
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
+    void ResetKey();
 
     void AddMap(Map_ID id);
 
@@ -47,12 +48,14 @@ public:
     void DrawUnit();
 
     bool EncounterEnemy();
-    void Battle();
+    void StartBattle();
     void KillEnemy();
 
     void InitGame();
 
 private:
+
+    bool InBattle = false;
 
     bool PlayerWin = true;
 

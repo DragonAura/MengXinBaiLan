@@ -48,36 +48,50 @@ BaiLan::BaiLan(QWidget* parent)
     
 }
 
+void BaiLan::ResetKey()
+{
+    Key_W = false;
+    Key_A = false;
+    Key_S = false;
+    Key_D = false;
+}
+
 void BaiLan::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_W ||
-        event->key() == Qt::Key_Up)
-        Key_W = true;
-    if (event->key() == Qt::Key_A ||
-        event->key() == Qt::Key_Left)
-        Key_A = true;
-    if (event->key() == Qt::Key_S ||
-        event->key() == Qt::Key_Down)
-        Key_S = true;
-    if (event->key() == Qt::Key_D ||
-        event->key() == Qt::Key_Right)
-        Key_D = true;
+    if (InBattle == false)
+    {
+        if (event->key() == Qt::Key_W ||
+            event->key() == Qt::Key_Up)
+            Key_W = true;
+        if (event->key() == Qt::Key_A ||
+            event->key() == Qt::Key_Left)
+            Key_A = true;
+        if (event->key() == Qt::Key_S ||
+            event->key() == Qt::Key_Down)
+            Key_S = true;
+        if (event->key() == Qt::Key_D ||
+            event->key() == Qt::Key_Right)
+            Key_D = true;
+    }
 }
 
 void BaiLan::keyReleaseEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_W ||
-        event->key() == Qt::Key_Up)
-        Key_W = false;
-    if (event->key() == Qt::Key_A ||
-        event->key() == Qt::Key_Left)
-        Key_A = false;
-    if (event->key() == Qt::Key_S ||
-        event->key() == Qt::Key_Down)
-        Key_S = false;
-    if (event->key() == Qt::Key_D ||
-        event->key() == Qt::Key_Right)
-        Key_D = false;
+    if (InBattle == false)
+    {
+        if (event->key() == Qt::Key_W ||
+            event->key() == Qt::Key_Up)
+            Key_W = false;
+        if (event->key() == Qt::Key_A ||
+            event->key() == Qt::Key_Left)
+            Key_A = false;
+        if (event->key() == Qt::Key_S ||
+            event->key() == Qt::Key_Down)
+            Key_S = false;
+        if (event->key() == Qt::Key_D ||
+            event->key() == Qt::Key_Right)
+            Key_D = false;
+    }
 }
 
 void BaiLan::AddMap(Map_ID id)
@@ -145,8 +159,9 @@ bool BaiLan::EncounterEnemy()
     return false;
 }
 
-void BaiLan::Battle()
+void BaiLan::StartBattle()
 {
+    ResetKey();
     Explore* Map = new Explore;
     for (auto item : Maps)
         if (item->GetID() == CurrentMap)
@@ -155,13 +170,14 @@ void BaiLan::Battle()
             break;
         }
     Unit* Enemy = new Unit;
+    //int PlayerX = Player->GetX(), PlayerY = Player->GetY();
     for(auto item:Map->GetEnemies())
         if (item->GetX() == EnemyX && item->GetY() == EnemyY)
         {
             Enemy = item;
             break;
         }
-    //此处应当new一个Battle类，由于还没写，暂时跳过
+    Battle* battle = new Battle(Player, Enemy);
     ui.testlabel->setText("遇敌！");
     if (PlayerWin)
         KillEnemy();
@@ -243,5 +259,5 @@ void BaiLan::PlayerMovement()
     if (Key_D == true && Test_Wall(Right) == false)Player->ChangePosition(2, 0);
     DrawUnit();
     if (EncounterEnemy())
-        Battle();
+        StartBattle();
 }
