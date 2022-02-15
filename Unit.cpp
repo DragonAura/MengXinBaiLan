@@ -23,6 +23,7 @@ Unit::Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber)//Unit�
 	OpponentNum = 0;
 	MaxHP = hp;
 	health = hp;
+	attack = atk;
 	experience = exp;
 	level = lvl;
 	skillpoint = 100;
@@ -73,7 +74,7 @@ int Unit::AddSkill(Skill_ID id)
 	if (EmptySlotNum == 0) return ERROR;//检测是否还有剩余的技能槽
 	Skills* newSkill = SkillAdder(id);
 	if (newSkill == nullptr) return ERROR;//检测输入id的合法性
-	for (auto item : SkillSlot)
+	for (auto& item : SkillSlot)
 		if (item == nullptr)
 		{
 			item = newSkill;
@@ -85,7 +86,7 @@ int Unit::AddSkill(Skill_ID id)
 int Unit::RemoveSkill(Skill_ID id)
 {
 	if (id == Skill_Attack)return ERROR;
-	for(auto item:SkillSlot)
+	for(auto& item:SkillSlot)
 		if (item != nullptr && item->GetSkillID() == id)
 		{
 			delete item;
@@ -109,11 +110,10 @@ int Unit::UseSkill(int SlotofSkill)
 	if (SkillSlot[SlotofSkill] == nullptr) return ERROR;//检测选中的技能槽是否有技能
 	if (skillpoint < SkillSlot[SlotofSkill]->GetSP())return ERROR;//检测选中的技能是否有足够的SP释放
 	for (int i = 0; i < OpponentNum; i++)
-		SkillSlot[SlotofSkill]->UseSkill(Opponent[i], OpponentNum);
+		SkillSlot[SlotofSkill]->UseSkill(Opponent[i], this, OpponentNum);
 	OpponentNum = 0;
 	Opponent.clear();
-	for (auto item : Opponent)
-		item = nullptr;
+	Opponent.resize(5);
 	skillpoint -= SkillSlot[SlotofSkill]->GetSP();
 	return NORMAL;
 }

@@ -1,4 +1,4 @@
-#include"total.h"
+ï»¿#include"total.h"
 
 void Battle::AddUnit(Unit* unit)
 {
@@ -27,20 +27,41 @@ void Battle::InBattle()
 {
 	while (testwin() == false)
 	{
-		for (auto item : BattleUnit)//²Ù×÷£¬¾ßÌåº¯Êý´ý¶¨
-			;
+		for (auto& item : BattleUnit)//æ“ä½œï¼Œå…·ä½“å‡½æ•°å¾…å®š
+		{
+			/*item->ChangeHp(-1);*/
+			for (auto opponent : BattleUnit)
+				if (opponent->GetID() != item->GetID())
+				{
+					item->AddOpponent(opponent);
+					break;
+				}
+			item->UseSkill(0);
+			bl->ChangeUIHP(BattleUnit[0]->GetHP());
+			QEventLoop loop;
+			QTimer::singleShot(100, &loop, SLOT(quit()));
+			loop.exec();
+			if (testwin() == true)break;
+		}
 	}
 }
 
 bool Battle::testwin()
 {
 	bool result = true;
-	for (auto item : BattleUnit)
-		if (item->GetID() == Unit_Player && item->GetHP() <= 0)return true;
+	std::vector<Unit*>::iterator mark = BattleUnit.end();
+	for (auto it = BattleUnit.begin(); it != BattleUnit.end(); it++)
+	{
+		if ((*it)->Alive() == false)
+			mark = it;
+		if ((*it)->GetID() == Unit_Player && (*it)->Alive() == false)return true;
 		else
-			if (item->GetID() != Unit_Player && item->GetHP() > 0)
+			if ((*it)->GetID() != Unit_Player && (*it)->Alive() == true)
 			{
 				result = false;
 			}
+	}
+	if (mark != BattleUnit.end())
+		BattleUnit.erase(mark);
 	return result;
 }

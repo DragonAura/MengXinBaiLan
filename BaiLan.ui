@@ -58,6 +58,32 @@
     </rect>
    </property>
   </widget>
+  <widget class="QLabel" name="HPText">
+   <property name="geometry">
+    <rect>
+     <x>1200</x>
+     <y>280</y>
+     <width>54</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PlayerHP</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="HpLabel">
+   <property name="geometry">
+    <rect>
+     <x>1270</x>
+     <y>280</y>
+     <width>54</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>100</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

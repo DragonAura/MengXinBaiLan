@@ -177,9 +177,11 @@ void BaiLan::StartBattle()
             Enemy = item;
             break;
         }
-    Battle* battle = new Battle(Player, Enemy);
+    Battle* battle = new Battle(Player, Enemy, this);
+    battle->InBattle();
+    ui.HpLabel->setNum(Player->GetHP());
     ui.testlabel->setText("遇敌！");
-    if (PlayerWin)
+    if (Player->Alive())
         KillEnemy();
 }
 
@@ -199,7 +201,7 @@ void BaiLan::InitGame()
 {
     CurrentMap = Map_MAP1;
     AddMap(Map_MAP1);
-    Player = new Unit(100, 1, 0, 1, Unit_Player, 4);
+    Player = new Unit(100, 5, 0, 1, Unit_Player, 4);
     bool ok = false;
     QString playername;
     while (!ok || playername.isEmpty())

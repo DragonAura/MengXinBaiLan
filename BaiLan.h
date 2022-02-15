@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QWidget>
 #include<QImage>
+#include<QEventLoop>
 #include<QGraphicsView>
 #include<QPixmap>
 #include<QGraphicsPixmapItem>
@@ -40,6 +41,8 @@ public:
     void ResetKey();
 
     void AddMap(Map_ID id);
+
+    void ChangeUIHP(int hp) { ui.HpLabel->setNum(hp); }
 
 //该函数作用为画出不可移动的部分
     void DrawMap();//该函数未检测数据合法性，要求自行注意以CurrentMap为ID的Explore类是否存在于Maps数组内

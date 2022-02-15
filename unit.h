@@ -32,6 +32,8 @@ public:
 	int GetX() { return X; }
 	int GetY() { return Y; }
 	int GetHP() { return health; }
+	int GetATK() { return attack; }
+	bool Alive() { return health > 0 ? true : false; }
 
 //技能相关的函数
 	int AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用

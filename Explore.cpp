@@ -19,7 +19,7 @@ Explore* MapGenerator(Map_ID id)
 		map->SetObject(40, 40, 40, 1, Object_WALL);
 		map->SetObject(40, 40, 1, 40, Object_WALL);
 		map->SetObject(20, 20, Object_WALL);
-		map->AddEnemy(300, 300, Map_MAP1, Unit_Enemy_Demon, 20, 1, 20, 1, 0);
+		map->AddEnemy(300, 300, Map_MAP1, Unit_Enemy_Demon, 10, 1, 20, 1, 0);
 		break;
 	}
 	return map;
