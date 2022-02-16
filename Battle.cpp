@@ -1,5 +1,7 @@
 ﻿#include"total.h"
 
+
+
 void Battle::AddUnit(Unit* unit)
 {
 	switch (unit->GetID())
@@ -15,8 +17,10 @@ void Battle::AddUnit(Unit* unit)
 		*new1 = *unit, * new2 = *unit;
 		new1->BattleX = MapXSize / BlockSize / 3;
 		new1->BattleY = MapYSize / BlockSize / 4;
+		new1->SetName("Demon1");
 		new2->BattleX = MapXSize / BlockSize / 3 * 2;
 		new2->BattleY = MapYSize / BlockSize / 4;
+		new2->SetName("Demon2");
 		BattleUnit.push_back(new1);
 		BattleUnit.push_back(new2);
 		break;
@@ -29,21 +33,63 @@ void Battle::InBattle()
 	{
 		for (auto& item : BattleUnit)//操作，具体函数待定
 		{
-			/*item->ChangeHp(-1);*/
-			for (auto opponent : BattleUnit)
-				if (opponent->GetID() != item->GetID())
-				{
-					item->AddOpponent(opponent);
-					break;
-				}
-			item->UseSkill(0);
-			bl->ChangeUIHP(BattleUnit[0]->GetHP());
-			QEventLoop loop;
-			QTimer::singleShot(100, &loop, SLOT(quit()));
-			loop.exec();
 			if (testwin() == true)break;
+			if (item->GetID() != Unit_Player)
+			{
+				AiControl(item);
+				bl->ChangeUIEnemyHealth(item->GetHP());
+				bl->ChangeUIEnemyName(item->GetName());
+			}
+			else
+			{
+				bl->ChangeUIEnemyHealth(" ");
+				bl->ChangeUIEnemyName(" ");
+				PlayerControl(item);
+			}
+			if (testwin() == true)break;
+			/*item->ChangeHp(-1);*/
+			//for (auto opponent : BattleUnit)
+			//	if (opponent->GetID() != item->GetID())
+			//	{
+			//		item->AddOpponent(opponent);
+			//		break;
+			//	}
+			//item->UseSkill(0);
+			bl->ChangeUIPlayerHP(BattleUnit[0]->GetHP());
+			QEventLoop loop;//这一片段用于延迟一段时间，具体取决于下面第一个参数，单位为ms
+			QTimer::singleShot(1000, &loop, SLOT(quit()));
+			loop.exec();
 		}
 	}
+}
+
+void Battle::AiControl(Unit* unit)//待细化
+{
+	for(auto& opponent:BattleUnit)
+		if (opponent->GetID() == Unit_Player)
+		{
+			unit->AddOpponent(opponent);
+			break;
+		}
+	unit->UseSkill(0);
+}
+
+void Battle::PlayerControl(Unit* player)
+{
+	for (auto& opponent : BattleUnit)
+		if (opponent->GetID() != Unit_Player)
+		{
+			player->AddOpponent(opponent);
+			break;
+		}
+	while (bl->GetSlot() == -1)
+	{
+		QEventLoop loop;
+		QTimer::singleShot(100, &loop, SLOT(quit()));
+		loop.exec();
+	}
+	player->UseSkill(bl->GetSlot());
+	bl->ResetSlot();
 }
 
 bool Battle::testwin()

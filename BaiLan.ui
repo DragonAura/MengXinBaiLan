@@ -84,6 +84,97 @@
     <string>100</string>
    </property>
   </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>700</y>
+     <width>251</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>UseSkill</string>
+   </property>
+   <widget class="QPushButton" name="AttackButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Attack</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="EnemyInfo">
+   <property name="geometry">
+    <rect>
+     <x>1330</x>
+     <y>700</y>
+     <width>241</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>EnemyInfo</string>
+   </property>
+   <widget class="QLabel" name="TextEnemy">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>CurrentEnemy</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="NameEnemy">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TextEnemyHealth">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>90</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>EnemyHealth</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="HealthEnemy">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string> </string>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

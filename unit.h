@@ -23,7 +23,7 @@ class Unit//出于各种原因，建议在定义Unit的时候采用定义指针�
 public:
 
 	Unit(){}
-	Unit(int hp,int atk,int exp,int lvl,Unit_ID id,int slotnumber);//构造函数中具体会初始化的数据待定，可能会需要很多
+	Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber);
 	virtual ~Unit(){}
 	void SetName(QString name_) { name = name_; }
 
@@ -33,6 +33,7 @@ public:
 	int GetY() { return Y; }
 	int GetHP() { return health; }
 	int GetATK() { return attack; }
+	QString GetName() { return name; }
 	bool Alive() { return health > 0 ? true : false; }
 
 //技能相关的函数

@@ -36,6 +36,18 @@ QImage GetUnitImg(Unit_ID id)
     return Image;
 }
 
+QString GetName(Unit_ID id)
+{
+    QString string;
+    switch(id)
+    {
+    case Unit_Enemy_Demon:
+        string = "Demon";
+        break;
+    }
+    return string;
+}
+
 BaiLan::BaiLan(QWidget* parent)
     : QWidget(parent)
 {
@@ -178,7 +190,9 @@ void BaiLan::StartBattle()
             break;
         }
     Battle* battle = new Battle(Player, Enemy, this);
+    InBattle = true;
     battle->InBattle();
+    InBattle = false;
     ui.HpLabel->setNum(Player->GetHP());
     ui.testlabel->setText("遇敌！");
     if (Player->Alive())
@@ -262,4 +276,10 @@ void BaiLan::PlayerMovement()
     DrawUnit();
     if (EncounterEnemy())
         StartBattle();
+}
+
+void BaiLan::on_AttackButton_clicked()
+{
+    if (InBattle == true)
+        SlotToUse = 0;
 }

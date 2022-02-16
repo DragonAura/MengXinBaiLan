@@ -28,6 +28,7 @@ class Unit;
 
 QImage GetObjImg(Object_ID id);//返回某一Object的贴图
 QImage GetUnitImg(Unit_ID id);//返回某一Unit的贴图
+QString GetName(Unit_ID id);
 
 class BaiLan : public QWidget
 {
@@ -42,7 +43,13 @@ public:
 
     void AddMap(Map_ID id);
 
-    void ChangeUIHP(int hp) { ui.HpLabel->setNum(hp); }
+    void ChangeUIPlayerHP(int hp) { ui.HpLabel->setNum(hp); }
+    void ChangeUIEnemyName(QString name) { ui.NameEnemy->setText(name); }
+    void ChangeUIEnemyHealth(int hp) { ui.HealthEnemy->setNum(hp); }
+    void ChangeUIEnemyHealth(QString hp) { ui.HealthEnemy->setText(hp); }
+
+    int GetSlot() { return SlotToUse; }
+    void ResetSlot() { SlotToUse = -1; }
 
 //该函数作用为画出不可移动的部分
     void DrawMap();//该函数未检测数据合法性，要求自行注意以CurrentMap为ID的Explore类是否存在于Maps数组内
@@ -57,6 +64,7 @@ public:
     void InitGame();
 
 private:
+    int SlotToUse = -1;//记录玩家接下来将要使用的技能所在的技能槽
 
     bool InBattle = false;
 
@@ -82,5 +90,6 @@ private:
 
 public slots:
     void PlayerMovement();
+    void on_AttackButton_clicked();
 
 };

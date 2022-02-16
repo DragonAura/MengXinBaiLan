@@ -26,6 +26,7 @@ Unit::Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber)//Unitç
 	level = lvl;
 	skillpoint = 100;
 	ID = id;
+	name = " ";
 	for (auto& item : Opponent)
 		item = nullptr;
 	EmptySlotNum = slotnumber;
