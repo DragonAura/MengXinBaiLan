@@ -53,6 +53,8 @@ public:
 	void ChangePosition(int x, int y);//不切换地图在同一地图移动时应当使用该函数，此时的xy为相对位移
 
 	int BattleX, BattleY;//记录某Unit在当前Battle地图的XY位置，应当以Block（24x24）记录
+	Skills* LastSkill;
+	std::vector<Unit*>LastOpponent;
 
 protected:
 	int MaxHP;
@@ -69,5 +71,6 @@ protected:
 	int OpponentNum;
 	int X, Y;//记录某Unit在当前Explore地图的XY位置，应当以Pixel（即960x960）记录，而非Block记录
 	Map_ID Map;//记录Unit当前所在的地图
+	
 
 };

@@ -25,10 +25,12 @@ enum Direction
 
 class Explore;
 class Unit;
+class Battle;
 
 QImage GetObjImg(Object_ID id);//返回某一Object的贴图
 QImage GetUnitImg(Unit_ID id);//返回某一Unit的贴图
 QString GetName(Unit_ID id);
+Object_ID GetObj(Map_ID id);
 
 class BaiLan : public QWidget
 {
@@ -57,9 +59,14 @@ public:
 //该函数作用为画出可以移动的部分
     void DrawUnit();
 
+//该函数画出战斗地图
+    void DrawBattleMap();
+
     bool EncounterEnemy();
     void StartBattle();
     void KillEnemy();
+
+    void AddInformation(QString text);
 
     void InitGame();
 
@@ -85,6 +92,8 @@ private:
 
     Map_ID CurrentMap;
     std::vector<Explore*> Maps;
+
+    Battle* battle;
 
     QTimer* time;
 

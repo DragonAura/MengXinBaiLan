@@ -17,7 +17,6 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 Unit::Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber)//Unit的构造函数，效果为将Unit初始化；位置没有专门初始化，需要在构造之后手动设置
 {
 	Opponent.clear();
-	Opponent.resize(5);
 	OpponentNum = 0;
 	MaxHP = hp;
 	health = hp;
@@ -78,34 +77,36 @@ int Unit::AddSkill(Skill_ID id)
 int Unit::RemoveSkill(Skill_ID id)
 {
 	if (id == Skill_Attack)return ERROR;
-	for(auto& item:SkillSlot)
-		if (item != nullptr && item->GetSkillID() == id)
+	std::vector<Unit*>::iterator mark = Opponent.end()+1;
+	for (auto it = Opponent.begin(); it != Opponent.end(); it++)
+		if ((*it)->GetID() == id)
 		{
-			delete item;
-			item = nullptr;
-			EmptySlotNum++;
+			mark = it;
 			break;
 		}
+	if (mark != Opponent.end() + 1)
+		Opponent.erase(mark);
 	return NORMAL;
 }
 
 int Unit::AddOpponent(Unit* newopponent)
 {
 	if (OpponentNum >= 5) return ERROR;
-	Opponent[OpponentNum] = newopponent;
+	Opponent.push_back(newopponent);
 	OpponentNum++;
 	return NORMAL;
 }
 
 int Unit::UseSkill(int SlotofSkill)
 {
-	if (SkillSlot[SlotofSkill] == nullptr) return ERROR;//检测选中的技能槽是否有技能
+	if (SlotofSkill > SkillSlot.size()) return ERROR;//检测选中的技能槽是否有技能
 	if (skillpoint < SkillSlot[SlotofSkill]->GetSP())return ERROR;//检测选中的技能是否有足够的SP释放
-	for (int i = 0; i < OpponentNum; i++)
-		SkillSlot[SlotofSkill]->UseSkill(Opponent[i], this, OpponentNum);
+	LastSkill = SkillSlot[SlotofSkill];
+	LastOpponent = Opponent;
+	for (auto& item : Opponent)
+		SkillSlot[SlotofSkill]->UseSkill(item, this, OpponentNum);
 	OpponentNum = 0;
 	Opponent.clear();
-	Opponent.resize(5);
 	skillpoint -= SkillSlot[SlotofSkill]->GetSP();
 	return NORMAL;
 }

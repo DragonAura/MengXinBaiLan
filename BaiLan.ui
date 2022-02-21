@@ -145,7 +145,7 @@
      </rect>
     </property>
     <property name="text">
-     <string> </string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="TextEnemyHealth">
@@ -171,9 +171,22 @@
      </rect>
     </property>
     <property name="text">
-     <string> </string>
+     <string/>
     </property>
    </widget>
+  </widget>
+  <widget class="QTextEdit" name="Information">
+   <property name="geometry">
+    <rect>
+     <x>1080</x>
+     <y>360</y>
+     <width>491</width>
+     <height>311</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

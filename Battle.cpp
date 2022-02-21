@@ -1,7 +1,5 @@
 ﻿#include"total.h"
 
-
-
 void Battle::AddUnit(Unit* unit)
 {
 	switch (unit->GetID())
@@ -31,20 +29,29 @@ void Battle::InBattle()
 {
 	while (testwin() == false)
 	{
-		for (auto& item : BattleUnit)//操作，具体函数待定
+		for (int i = 0; i < BattleUnit.size();i++)//操作，具体函数待定
 		{
 			if (testwin() == true)break;
-			if (item->GetID() != Unit_Player)
+			if (BattleUnit[i]->GetID() != Unit_Player)
 			{
-				AiControl(item);
-				bl->ChangeUIEnemyHealth(item->GetHP());
-				bl->ChangeUIEnemyName(item->GetName());
+				AiControl(BattleUnit[i]);
+				bl->ChangeUIEnemyHealth(BattleUnit[i]->GetHP());
+				bl->ChangeUIEnemyName(BattleUnit[i]->GetName());
+				QString opponent;
+				for (auto opp : BattleUnit[i]->LastOpponent)
+					opponent = opponent + opp->GetName() + ", ";
+				bl->AddInformation(BattleUnit[i]->GetName() + " Uses " + BattleUnit[i]->LastSkill->GetName() + " to " + opponent);
 			}
 			else
 			{
 				bl->ChangeUIEnemyHealth(" ");
 				bl->ChangeUIEnemyName(" ");
-				PlayerControl(item);
+				PlayerControl(BattleUnit[i]);
+				QString opponent;
+				for (auto opp : BattleUnit[i]->LastOpponent)
+					opponent = opponent + opp->GetName() + ", ";
+				bl->AddInformation(BattleUnit[i]->GetName() + " Uses " + BattleUnit[i]->LastSkill->GetName() + " to " + opponent);
+				
 			}
 			if (testwin() == true)break;
 			/*item->ChangeHp(-1);*/
@@ -100,14 +107,19 @@ bool Battle::testwin()
 	{
 		if ((*it)->Alive() == false)
 			mark = it;
-		if ((*it)->GetID() == Unit_Player && (*it)->Alive() == false)return true;
-		else
-			if ((*it)->GetID() != Unit_Player && (*it)->Alive() == true)
-			{
+		if ((*it)->GetID() == Unit_Player && (*it)->Alive() == false)
+		{
+			bl->AddInformation("Player " + (*it)->GetName() + " Dies");
+			return true;
+		}
+		else if ((*it)->GetID() != Unit_Player && (*it)->Alive() == true)
 				result = false;
-			}
 	}
 	if (mark != BattleUnit.end())
+	{
+		bl->AddInformation((*mark)->GetName() + " Dies");
+		delete (*mark);
 		BattleUnit.erase(mark);
+	}
 	return result;
 }

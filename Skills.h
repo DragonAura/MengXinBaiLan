@@ -18,6 +18,7 @@ public:
 	virtual int UseSkill(Unit* opponent, Unit* user, int number) = 0;//提供释放接口，技能的具体效果应当在UseSkill函数中完成
 	Skill_ID GetSkillID();
 	int GetSP() { return SkillPoint; }
+	QString GetName() { return name; }
 
 protected:
 	Unit SelectedTarget;//选取所需释放技能的对象
@@ -25,6 +26,7 @@ protected:
 	int skill_level;
 	const int MaxOpponent;
 	int SkillPoint;//记录释放技能需要的技能点数，如果是类似于攻击之类回复技能点数的手段，则SkillPoint应为负
+	QString name;
 
 };
 
@@ -40,7 +42,7 @@ public:
 class SkillAttack :public Skills
 {
 public:
-	SkillAttack(int lvl = 1, int max = 1) :Skills(Skill_Attack, lvl, max) { SkillPoint = -10; }
+	SkillAttack(int lvl = 1, int max = 1) :Skills(Skill_Attack, lvl, max) { SkillPoint = -10; name = "Attack"; }
 	~SkillAttack() {}
 	int UseSkill(Unit* opponent, Unit* user, int number);
 };

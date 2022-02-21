@@ -48,6 +48,18 @@ QString GetName(Unit_ID id)
     return string;
 }
 
+Object_ID GetObj(Map_ID id)
+{
+    Object_ID object;
+    switch (id)
+    {
+    case Map_MAP1:
+        object = Object_GRASS;
+        break;
+    }
+    return object;
+}
+
 BaiLan::BaiLan(QWidget* parent)
     : QWidget(parent)
 {
@@ -113,12 +125,14 @@ void BaiLan::AddMap(Map_ID id)
 
 void BaiLan::DrawMap()//画出以CurrentMap为ID的地图
 {
-    int i;
+    Explore* Map = new Explore;
     QGraphicsScene* scene = new QGraphicsScene;
-    for (i = 0; i < Maps.size(); i++)
-        if (Maps[i]->GetID() == CurrentMap)
+    for(auto item:Maps)
+        if (item->GetID() == CurrentMap)
+        {
+            *Map = *item;
             break;
-    Explore* Map = Maps[i];
+        }
     for (int i = 0; i < MapXSize/BlockSize; i++)
         for (int j = 0; j < MapYSize/BlockSize; j++)
         {
@@ -147,6 +161,12 @@ void BaiLan::DrawUnit()
     scene->addItem(item);
     scene->setSceneRect(0, 0, 960, 960);
     ui.UnitView->setScene(scene);
+}
+
+void BaiLan::DrawBattleMap()
+{
+    QGraphicsScene* scene = new QGraphicsScene;
+    
 }
 
 bool BaiLan::EncounterEnemy()
@@ -189,9 +209,11 @@ void BaiLan::StartBattle()
             Enemy = item;
             break;
         }
-    Battle* battle = new Battle(Player, Enemy, this);
+    battle = new Battle(Player, Enemy, this, GetObj(Map->GetID()));
     InBattle = true;
     battle->InBattle();
+    delete battle;
+    battle = nullptr;
     InBattle = false;
     ui.HpLabel->setNum(Player->GetHP());
     ui.testlabel->setText("遇敌！");
@@ -211,11 +233,17 @@ void BaiLan::KillEnemy()
         }
 }
 
+void BaiLan::AddInformation(QString text)
+{
+    ui.Information->append(text);
+}
+
 void BaiLan::InitGame()
 {
     CurrentMap = Map_MAP1;
     AddMap(Map_MAP1);
     Player = new Unit(100, 5, 0, 1, Unit_Player, 4);
+    battle = nullptr;
     bool ok = false;
     QString playername;
     while (!ok || playername.isEmpty())
