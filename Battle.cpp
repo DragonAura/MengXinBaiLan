@@ -27,10 +27,12 @@ void Battle::AddUnit(Unit* unit)
 
 void Battle::InBattle()
 {
+	bl->DrawBattleMap();
 	while (testwin() == false)
 	{
 		for (int i = 0; i < BattleUnit.size();i++)//操作，具体函数待定
 		{
+			bl->DrawBattleUnit();
 			if (testwin() == true)break;
 			if (BattleUnit[i]->GetID() != Unit_Player)
 			{
@@ -63,6 +65,7 @@ void Battle::InBattle()
 			//	}
 			//item->UseSkill(0);
 			bl->ChangeUIPlayerHP(BattleUnit[0]->GetHP());
+			bl->DrawBattleUnit();
 			QEventLoop loop;//这一片段用于延迟一段时间，具体取决于下面第一个参数，单位为ms
 			QTimer::singleShot(1000, &loop, SLOT(quit()));
 			loop.exec();

@@ -62,6 +62,9 @@ public:
 //该函数画出战斗地图
     void DrawBattleMap();
 
+//该函数画出战斗中的Unit的位置
+    void DrawBattleUnit();
+
     bool EncounterEnemy();
     void StartBattle();
     void KillEnemy();

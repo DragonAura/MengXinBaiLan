@@ -166,7 +166,30 @@ void BaiLan::DrawUnit()
 void BaiLan::DrawBattleMap()
 {
     QGraphicsScene* scene = new QGraphicsScene;
-    
+    for(int i=0;i<MapXSize/BlockSize;i++)
+        for (int j = 0; j < MapYSize / BlockSize; j++)
+        {
+            QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
+            item->setPixmap(QPixmap::fromImage(GetObjImg(battle->GetMap())));
+            item->setPos(QPointF(i * BlockSize, j * BlockSize));
+            scene->addItem(item);
+        }
+    scene->setSceneRect(0, 0, 960, 960);
+    ui.GraphicsView->setScene(scene);
+}
+
+void BaiLan::DrawBattleUnit()
+{
+    QGraphicsScene* scene = new QGraphicsScene;
+    for (auto item : battle->GetUnit())
+    {
+        QGraphicsPixmapItem* pixitem = new QGraphicsPixmapItem;
+        pixitem->setPixmap(QPixmap::fromImage(GetUnitImg(item->GetID())));
+        pixitem->setPos(QPointF(item->BattleX * BlockSize, item->BattleY * BlockSize));
+        scene->addItem(pixitem);
+    }
+    scene->setSceneRect(0, 0, 960, 960);
+    ui.UnitView->setScene(scene);
 }
 
 bool BaiLan::EncounterEnemy()
@@ -212,6 +235,7 @@ void BaiLan::StartBattle()
     battle = new Battle(Player, Enemy, this, GetObj(Map->GetID()));
     InBattle = true;
     battle->InBattle();
+    DrawMap();
     delete battle;
     battle = nullptr;
     InBattle = false;

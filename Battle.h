@@ -9,7 +9,7 @@ class BaiLan;
 class Battle
 {
 public:
-	Battle(Unit* unit1, Unit* unit2, BaiLan* bailan, Object_ID id) { AddUnit(unit1); AddUnit(unit2); bl = bailan; BattleMap = id; }
+	Battle(Unit* unit1, Unit* unit2, BaiLan* bailan, Object_ID id) { AddUnit(unit1); AddUnit(unit2); bl = bailan; BattleMap = id;  }
 	~Battle(){}
 	void AddUnit(Unit* unit);//增加时要求提前对每一种不同的Unit_ID的enum进行相关的布局
 	bool testwin();//用于测试战斗是否结束
@@ -17,6 +17,7 @@ public:
 	void AiControl(Unit* unit);
 	void PlayerControl(Unit* player);
 	Object_ID GetMap() { return BattleMap; }
+	std::vector<Unit*> GetUnit() { return BattleUnit; }
 
 private:
 	Object_ID BattleMap;
