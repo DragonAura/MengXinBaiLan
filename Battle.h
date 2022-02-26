@@ -23,4 +23,5 @@ private:
 	Object_ID BattleMap;
 	std::vector<Unit*>BattleUnit;
 	BaiLan* bl;
+
 };

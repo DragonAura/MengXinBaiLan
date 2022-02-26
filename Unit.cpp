@@ -14,18 +14,21 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	return skill;
 }
 
-Unit::Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber)//Unit的构造函数，效果为将Unit初始化；位置没有专门初始化，需要在构造之后手动设置
+Unit::Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber,int sizex,int sizey)//Unit的构造函数，效果为将Unit初始化；位置没有专门初始化，需要在构造之后手动设置
 {
 	Opponent.clear();
 	OpponentNum = 0;
 	MaxHP = hp;
 	health = hp;
 	attack = atk;
-	experience = exp;
+	MaxEXP = exp;
+	experience = 0;
 	level = lvl;
 	skillpoint = 100;
 	ID = id;
 	name = " ";
+	SizeX = sizex;
+	SizeY = sizey;
 	for (auto& item : Opponent)
 		item = nullptr;
 	EmptySlotNum = slotnumber;
@@ -48,11 +51,21 @@ void Unit::ChangeAtk(int atk)
 void Unit::ChangeEXP(int exp)
 {
 	experience += exp;
+	if (experience < 0)experience = 0;
 }
 
-void Unit::ChangeLvl(int lvl)
+bool Unit::LevelUp()
 {
-	level += lvl;
+	if (experience >= MaxEXP)
+	{
+		experience -= MaxEXP;
+		MaxEXP += 20;
+		attack += 1;
+		MaxHP += 20;
+		health = MaxHP;
+		return true;
+	}
+	else return false;
 }
 
 void Unit::ChangePosition(int x, int y, Map_ID map)

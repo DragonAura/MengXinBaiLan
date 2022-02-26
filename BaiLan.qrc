@@ -4,5 +4,6 @@
         <file>player.png</file>
         <file>wall.jpg</file>
         <file>Enemy_Demon.png</file>
+        <file>Enemy_Slime.png</file>
     </qresource>
 </RCC>

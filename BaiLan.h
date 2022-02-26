@@ -65,9 +65,12 @@ public:
 //该函数画出战斗中的Unit的位置
     void DrawBattleUnit();
 
+    Map_ID GetMap() { return CurrentMap; }
+
     bool EncounterEnemy();
     void StartBattle();
     void KillEnemy();
+    void ChangeControl();
 
     void AddInformation(QString text);
 
@@ -77,6 +80,7 @@ private:
     int SlotToUse = -1;//记录玩家接下来将要使用的技能所在的技能槽
 
     bool InBattle = false;
+    bool PlayerControl = false;
 
     bool PlayerWin = true;
 

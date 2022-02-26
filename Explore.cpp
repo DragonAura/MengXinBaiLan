@@ -19,7 +19,8 @@ Explore* MapGenerator(Map_ID id)
 		map->SetObject(40, 40, 40, 1, Object_WALL);
 		map->SetObject(40, 40, 1, 40, Object_WALL);
 		map->SetObject(20, 20, Object_WALL);
-		map->AddEnemy(300, 300, Map_MAP1, Unit_Enemy_Demon, 10, 1, 20, 1, 1);
+		map->AddEnemy(300, 300, Map_MAP1, Unit_Enemy_Demon, 20, 1, 20, 1, 1);
+		map->AddEnemy(600, 300, Map_MAP1, Unit_Enemy_Slime, 10, 5, 20, 1, 1, 24, 24);
 		break;
 	}
 	return map;
@@ -33,9 +34,9 @@ Explore::Explore(Map_ID id)
 			Object[i][j] = Object_GRASS;
 }
 
-void Explore::AddEnemy(int x, int y, Map_ID map, Unit_ID id,int hp,int atk,int exp,int lvl,int skillnum)
+void Explore::AddEnemy(int x, int y, Map_ID map, Unit_ID id,int hp,int atk,int exp,int lvl,int skillnum,int sizex,int sizey)
 {
-	Unit* enemy = new Unit(hp, atk, exp, lvl, id, skillnum);
+	Unit* enemy = new Unit(hp, atk, exp, lvl, id, skillnum, sizex, sizey);
 	enemy->ChangePosition(x, y, map);
 	Enemies.push_back(enemy);
 }
@@ -55,8 +56,8 @@ void Explore::SetObject(int x1, int y1, int x2, int y2, Object_ID id)
 {
 	standard(x1, x2);
 	standard(y1, y2);
-	for (int i = x1-1; i < x2; i++)
-		for (int j = y1-1; j < y2; j++)
+	for (int i = x1 - 1; i < x2; i++)
+		for (int j = y1 - 1; j < y2; j++)
 			Object[i][j] = id;
 }
 

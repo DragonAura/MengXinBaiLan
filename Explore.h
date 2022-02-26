@@ -33,7 +33,7 @@ public:
 	void SetObject(int x, int y, Object_ID id);
 
 //设置敌人的函数
-	void AddEnemy(int x, int y, Map_ID map, Unit_ID id, int hp, int atk, int exp, int lvl, int skillnum);
+	void AddEnemy(int x, int y, Map_ID map, Unit_ID id, int hp, int atk, int exp, int lvl, int skillnum, int sizeX = 24, int sizeY = 48);
 	void KillEnemey(int x, int y);
 	
 //提供外部获取地图内容的接口

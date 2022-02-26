@@ -32,20 +32,11 @@ QImage GetUnitImg(Unit_ID id)
     case Unit_Enemy_Demon:
         Image.load(":/image/Enemy_Demon.png");
         break;
-    }
-    return Image;
-}
-
-QString GetName(Unit_ID id)
-{
-    QString string;
-    switch(id)
-    {
-    case Unit_Enemy_Demon:
-        string = "Demon";
+    case Unit_Enemy_Slime:
+        Image.load(":/image/Enemy_Slime.png");
         break;
     }
-    return string;
+    return Image;
 }
 
 Object_ID GetObj(Map_ID id)
@@ -202,8 +193,8 @@ bool BaiLan::EncounterEnemy()
             break;
         }
     for (auto item : Map->GetEnemies())
-        if (Player->GetX() <= item->GetX() + PlayerXSize && Player->GetX() >= item->GetX() - PlayerXSize &&
-            Player->GetY() <= item->GetY() + PlayerYSize && Player->GetY() >= item->GetY() - PlayerYSize)
+        if (Player->GetX() <= item->GetX() + item->SizeX && Player->GetX() >= item->GetX() - Player->SizeX &&
+            Player->GetY() <= item->GetY() + item->SizeY && Player->GetY() >= item->GetY() - Player->SizeY)
         {
             EnemyX = item->GetX();
             EnemyY = item->GetY();
@@ -239,6 +230,7 @@ void BaiLan::StartBattle()
     delete battle;
     battle = nullptr;
     InBattle = false;
+    if (Player->LevelUp())ui.Information->append(Player->GetName() + " Level up! ");
     ui.HpLabel->setNum(Player->GetHP());
     ui.testlabel->setText("遇敌！");
     if (Player->Alive())
@@ -257,6 +249,11 @@ void BaiLan::KillEnemy()
         }
 }
 
+void BaiLan::ChangeControl()
+{
+    PlayerControl = !PlayerControl;
+}
+
 void BaiLan::AddInformation(QString text)
 {
     ui.Information->append(text);
@@ -266,7 +263,7 @@ void BaiLan::InitGame()
 {
     CurrentMap = Map_MAP1;
     AddMap(Map_MAP1);
-    Player = new Unit(100, 5, 0, 1, Unit_Player, 4);
+    Player = new Unit(100, 5, 100, 1, Unit_Player, 4);
     battle = nullptr;
     bool ok = false;
     QString playername;
@@ -303,14 +300,14 @@ bool BaiLan::Test_Wall(Direction dir)
             true : false;
         break;
     case Down:
-        result = Map->GetObject(Player->GetX() / BlockSize, (Player->GetY() + PlayerYSize + 2) / BlockSize) == Object_WALL ||
-            Map->GetObject(Player->GetX() / BlockSize + 1, (Player->GetY() + PlayerYSize + 2) / BlockSize) == Object_WALL ?
+        result = Map->GetObject(Player->GetX() / BlockSize, (Player->GetY() + Player->SizeY + 2) / BlockSize) == Object_WALL ||
+            Map->GetObject(Player->GetX() / BlockSize + 1, (Player->GetY() + Player->SizeY + 2) / BlockSize) == Object_WALL ?
             true : false;
         break;
     case Right:
-        result = Map->GetObject((Player->GetX() + PlayerXSize + 2) / BlockSize, Player->GetY() / BlockSize) == Object_WALL ||
-            Map->GetObject((Player->GetX() + PlayerXSize + 2) / BlockSize, Player->GetY() / BlockSize + 1) == Object_WALL ||
-            Map->GetObject((Player->GetX() + PlayerXSize + 2) / BlockSize, Player->GetY() / BlockSize + 2) == Object_WALL ?
+        result = Map->GetObject((Player->GetX() + Player->SizeX + 2) / BlockSize, Player->GetY() / BlockSize) == Object_WALL ||
+            Map->GetObject((Player->GetX() + Player->SizeX + 2) / BlockSize, Player->GetY() / BlockSize + 1) == Object_WALL ||
+            Map->GetObject((Player->GetX() + Player->SizeX + 2) / BlockSize, Player->GetY() / BlockSize + 2) == Object_WALL ?
             true : false;
         break;
     }
@@ -332,6 +329,6 @@ void BaiLan::PlayerMovement()
 
 void BaiLan::on_AttackButton_clicked()
 {
-    if (InBattle == true)
+    if (InBattle == true && PlayerControl == true)
         SlotToUse = 0;
 }
