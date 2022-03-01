@@ -63,6 +63,15 @@ BaiLan::BaiLan(QWidget* parent)
     
 }
 
+int GetLength(int num)
+{
+    if (num >= 0 && num < 10) return 1;
+    else if (num >= 10 && num < 100) return 2;
+    else if (num >= 100 && num < 1000)return 3;
+    else if (num >= 1000 && num < 10000)return 4;
+    else return 5;
+}
+
 void BaiLan::ResetKey()
 {
     Key_W = false;
@@ -157,7 +166,7 @@ void BaiLan::DrawUnit()
 void BaiLan::DrawBattleMap()
 {
     QGraphicsScene* scene = new QGraphicsScene;
-    for(int i=0;i<MapXSize/BlockSize;i++)
+    for (int i = 0; i < MapXSize / BlockSize; i++)
         for (int j = 0; j < MapYSize / BlockSize; j++)
         {
             QGraphicsPixmapItem* item = new QGraphicsPixmapItem;
@@ -174,6 +183,26 @@ void BaiLan::DrawBattleUnit()
     QGraphicsScene* scene = new QGraphicsScene;
     for (auto item : battle->GetUnit())
     {
+        QLabel* newlabel = new QLabel;
+        newlabel->setNum(item->GetHP());
+        QGraphicsProxyWidget* proxyWidget = scene->addWidget(newlabel);
+        int length = GetLength(item->GetHP());
+        switch (length)
+        {
+        case 1:
+            proxyWidget->setPos(QPointF(item->BattleX * BlockSize+10, item->BattleY * BlockSize - 9));
+            break;
+        case 2:
+            proxyWidget->setPos(QPointF(item->BattleX * BlockSize+6, item->BattleY * BlockSize - 9));
+            break;
+        case 3:
+            proxyWidget->setPos(QPointF(item->BattleX * BlockSize+2, item->BattleY * BlockSize - 9));
+            break;
+        case 4:
+            proxyWidget->setPos(QPointF(item->BattleX * BlockSize-1, item->BattleY * BlockSize - 9));
+            break;
+        }
+        
         QGraphicsPixmapItem* pixitem = new QGraphicsPixmapItem;
         pixitem->setPixmap(QPixmap::fromImage(GetUnitImg(item->GetID())));
         pixitem->setPos(QPointF(item->BattleX * BlockSize, item->BattleY * BlockSize));
@@ -276,6 +305,7 @@ void BaiLan::InitGame()
     setFocusPolicy(Qt::StrongFocus);
     DrawMap();
     DrawUnit();
+    setMouseTracking(true);
 }
 
 bool BaiLan::Test_Wall(Direction dir)

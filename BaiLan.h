@@ -9,6 +9,9 @@
 #include<QInputDialog>
 #include<QKeyEvent>
 #include<QTimer>
+#include<QGraphicsProxyWidget>
+#include<QMouseEvent>
+#include<QGraphicsSceneMouseEvent>
 #include "ui_BaiLan.h"
 
 enum Object_ID;
@@ -31,6 +34,7 @@ QImage GetObjImg(Object_ID id);//返回某一Object的贴图
 QImage GetUnitImg(Unit_ID id);//返回某一Unit的贴图
 QString GetName(Unit_ID id);
 Object_ID GetObj(Map_ID id);
+int GetLength(int num);
 
 class BaiLan : public QWidget
 {
@@ -41,6 +45,7 @@ public:
 
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
+
     void ResetKey();
 
     void AddMap(Map_ID id);
