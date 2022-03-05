@@ -26,6 +26,12 @@ enum Direction
     Right
 };
 
+typedef struct Coord
+{
+    int x;
+    int y;
+}Coordinates;
+
 class Explore;
 class Unit;
 class Battle;
@@ -41,6 +47,8 @@ class BaiLan : public QWidget
     Q_OBJECT
 
 public:
+    friend class MyGraphicsScene;
+
     BaiLan(QWidget *parent = Q_NULLPTR);
 
     void keyPressEvent(QKeyEvent* event);
@@ -99,6 +107,7 @@ private:
     Ui::BaiLanClass ui;
 
     int EnemyX=-9999, EnemyY=-9999;//记录正在发生战斗的敌人的位置
+    int MouseX = -1, MouseY = -1;
 
     Unit* Player;
 
@@ -112,5 +121,19 @@ private:
 public slots:
     void PlayerMovement();
     void on_AttackButton_clicked();
+
+};
+
+class MyGraphicsScene :public QGraphicsScene
+{
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+    BaiLan* bailan;
+    Unit* CurrentUnit = nullptr;
+
+public:
+    MyGraphicsScene(BaiLan* bl) :bailan(bl) {}
 
 };

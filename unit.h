@@ -56,7 +56,7 @@ public:
 	void ChangePosition(int x, int y);//不切换地图在同一地图移动时应当使用该函数，此时的xy为相对位移
 
 	int BattleX, BattleY;//记录某Unit在当前Battle地图的XY位置，应当以Block（24x24）记录
-	int SizeX, SizeY;//记录某Unit的贴图大小，主要用于遇敌检测
+	int SizeX, SizeY;//记录某Unit的贴图大小，主要用于遇敌检测，以pixel记录
 	Skills* LastSkill;
 	std::vector<Unit*>LastOpponent;
 

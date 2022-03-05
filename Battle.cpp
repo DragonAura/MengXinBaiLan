@@ -121,12 +121,12 @@ void Battle::AiControl(Unit* unit)//待细化，大体思路上会给不同的�
 
 void Battle::PlayerControl(Unit* player)
 {
-	for (auto& opponent : BattleUnit)
-		if (opponent->GetID() != Unit_Player)
-		{
-			player->AddOpponent(opponent);
-			break;
-		}
+	//for (auto& opponent : BattleUnit)
+	//	if (opponent->GetID() != Unit_Player)
+	//	{
+	//		player->AddOpponent(opponent);
+	//		break;
+	//	}
 	while (bl->GetSlot() == -1)
 	{
 		QEventLoop loop;

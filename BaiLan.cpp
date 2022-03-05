@@ -180,7 +180,7 @@ void BaiLan::DrawBattleMap()
 
 void BaiLan::DrawBattleUnit()
 {
-    QGraphicsScene* scene = new QGraphicsScene;
+    MyGraphicsScene* scene = new MyGraphicsScene(this);
     for (auto item : battle->GetUnit())
     {
         QLabel* newlabel = new QLabel;
@@ -280,6 +280,7 @@ void BaiLan::KillEnemy()
 
 void BaiLan::ChangeControl()
 {
+    MouseX = -1, MouseY = -1;
     PlayerControl = !PlayerControl;
 }
 
@@ -361,4 +362,34 @@ void BaiLan::on_AttackButton_clicked()
 {
     if (InBattle == true && PlayerControl == true)
         SlotToUse = 0;
+}
+
+void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+{
+    if (bailan->PlayerControl == true)
+    {
+        int x = event->scenePos().x();
+        int y = event->scenePos().y();
+        for (auto item : bailan->battle->GetUnit())
+        {
+            if (x<item->BattleX * BlockSize + item->SizeX &&
+                x>item->BattleX * BlockSize &&
+                y<item->BattleY * BlockSize + item->SizeY &&
+                y>item->BattleY * BlockSize)
+                CurrentUnit = item;
+        }
+    }
+
+}
+
+void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
+{
+    if (CurrentUnit != nullptr)
+        bailan->Player->AddOpponent(CurrentUnit);
+    CurrentUnit = nullptr;
+}
+
+void MyGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+    
 }
