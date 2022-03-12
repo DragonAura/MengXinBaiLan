@@ -17,11 +17,10 @@ public:
 	void AiControl(Unit* unit);
 	void PlayerControl(Unit* player);
 	Object_ID GetMap() { return BattleMap; }
-	std::vector<Unit*> GetUnit() { return BattleUnit; }
+	std::vector<Unit*>BattleUnit;
 
 private:
 	Object_ID BattleMap;
-	std::vector<Unit*>BattleUnit;
 	BaiLan* bl;
 
 };

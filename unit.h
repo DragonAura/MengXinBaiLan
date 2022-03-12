@@ -45,6 +45,8 @@ public:
 	bool AddOpponent(Unit* opponent);//释放技能之前要求先添加对象
 	bool RemoveOpponent(Unit* opponent);
 	std::vector<Unit*> GetOpponent() { return Opponent; }
+	void ClearOpponent() { Opponent.clear(); OpponentNum = 0; }
+	bool testOpp(int slot);
 
 //更改数据相关的函数接口
 	void ChangeHp(int hp);//提供更改内部数据的接口，其中hp、atk可为负

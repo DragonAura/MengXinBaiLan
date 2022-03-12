@@ -15,10 +15,11 @@ class Skills
 public:
 	Skills(Skill_ID id, int level = 1, int max = 1) :skill_id(id), skill_level(level), MaxOpponent(max) {}//构造技能的函数
 	virtual ~Skills(){}
-	virtual bool UseSkill(Unit* opponent, Unit* user, int number) = 0;//提供释放接口，技能的具体效果应当在UseSkill函数中完成
+	virtual void UseSkill(Unit* opponent, Unit* user, int number) = 0;//提供释放接口，技能的具体效果应当在UseSkill函数中完成
 	Skill_ID GetSkillID();
 	int GetSP() { return SkillPoint; }
 	QString GetName() { return name; }
+	int MaxOpp() { return MaxOpponent; }
 
 protected:
 	Unit SelectedTarget;//选取所需释放技能的对象
@@ -36,5 +37,5 @@ class SkillAttack :public Skills
 public:
 	SkillAttack(int lvl = 1, int max = 1) :Skills(Skill_Attack, lvl, max) { SkillPoint = -10; name = "Attack"; }
 	~SkillAttack() {}
-	bool UseSkill(Unit* opponent, Unit* user, int number);
+	void UseSkill(Unit* opponent, Unit* user, int number);
 };

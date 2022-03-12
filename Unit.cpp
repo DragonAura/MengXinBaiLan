@@ -128,6 +128,11 @@ bool Unit::RemoveOpponent(Unit* opponent)
 	return test;
 }
 
+bool Unit::testOpp(int slot)
+{
+	return SkillSlot[slot]->MaxOpp() > OpponentNum ? true : false;
+}
+
 bool Unit::UseSkill(int SlotofSkill)
 {
 	if (SlotofSkill > SkillSlot.size()) return false;//检测选中的技能槽是否有技能

@@ -181,7 +181,7 @@ void BaiLan::DrawBattleMap()
 void BaiLan::DrawBattleUnit()
 {
     MyGraphicsScene* scene = new MyGraphicsScene(this);
-    for (auto item : battle->GetUnit())
+    for (auto item : battle->BattleUnit)
     {
         QLabel* newlabel = new QLabel;
         newlabel->setNum(item->GetHP());
@@ -349,10 +349,10 @@ void BaiLan::PlayerMovement()
 {
     //static int i=0;
     //ui.testlabel->setNum(i++);
-    if (Key_W == true && Test_Wall(Up) == false)Player->ChangePosition(0, -2);
-    if (Key_A == true && Test_Wall(Left) == false)Player->ChangePosition(-2, 0);
-    if (Key_S == true && Test_Wall(Down) == false)Player->ChangePosition(0, 2);
-    if (Key_D == true && Test_Wall(Right) == false)Player->ChangePosition(2, 0);
+    if (Key_W == true && Test_Wall(Up) == false)Player->ChangePosition(0, -1);
+    if (Key_A == true && Test_Wall(Left) == false)Player->ChangePosition(-1, 0);
+    if (Key_S == true && Test_Wall(Down) == false)Player->ChangePosition(0, 1);
+    if (Key_D == true && Test_Wall(Right) == false)Player->ChangePosition(1, 0);
     DrawUnit();
     if (EncounterEnemy())
         StartBattle();
@@ -370,6 +370,7 @@ void BaiLan::on_AttackButton_clicked()
     {
         SlotToUse = -1;
         SkillChosen = false;
+        Player->ClearOpponent();
         AddInformation("Skill Unchosen: Attack");
     }
 }
@@ -390,16 +391,16 @@ void BaiLan::on_ConfirmButton_clicked()
 void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
     bool test = false;
-    bailan->MouseX = event->scenePos().x();
-    bailan->MouseY = event->scenePos().y();
+    bailan->MouseX = event->scenePos().x() / BlockSize;
+    bailan->MouseY = event->scenePos().y() / BlockSize;
     if (bailan->PlayerControl == true)
     {
-        for (auto item : bailan->battle->GetUnit())
+        for (auto item : bailan->battle->BattleUnit)
         {
-            if (bailan->MouseX <= item->BattleX * BlockSize + item->SizeX &&
-                bailan->MouseX >= item->BattleX * BlockSize &&
-                bailan->MouseX <= item->BattleY * BlockSize + item->SizeY &&
-                bailan->MouseX >= item->BattleY * BlockSize)
+            if (bailan->MouseX <= item->BattleX + item->SizeX / BlockSize &&
+                bailan->MouseX >= item->BattleX &&
+                bailan->MouseY <= item->BattleY + item->SizeY / BlockSize &&
+                bailan->MouseY >= item->BattleY)
             {
                 CurrentUnit = item;
                 bailan->MouseHaveUnit = true;
@@ -432,10 +433,14 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
                 break;
             }
         }
-        if (test == false)
+        if (test == false&&bailan->Player->testOpp(bailan->SlotToUse) == true)
         {
             bailan->Player->AddOpponent(CurrentUnit);
             bailan->AddInformation("Added Opponent: " + CurrentUnit->GetName());
+        }
+        else if (test == false && bailan->Player->testOpp(bailan->SlotToUse) == false)
+        {
+            bailan->AddInformation("Failed to add opponent! Reached max number of your chosen skill! ");
         }
     }
     else if (bailan->SkillChosen == false && bailan->MouseHaveUnit == false)
@@ -444,6 +449,7 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         bailan->Player->BattleY = bailan->MouseY / BlockSize;
         bailan->DrawBattleUnit();
     }
+
 }
 
 void MyGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
