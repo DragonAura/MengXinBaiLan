@@ -5,9 +5,6 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	Skills* skill = nullptr;
 	switch (id)
 	{
-	case Skill_Example:
-		skill = new SkillExample(1, 1);
-		break;
 	case Skill_Attack:
 		skill = new SkillAttack(1, 1);
 	}
@@ -78,18 +75,18 @@ void Unit::ChangePosition(int x, int y)
 	X += x, Y += y;
 }
 
-int Unit::AddSkill(Skill_ID id)
+bool Unit::AddSkill(Skill_ID id)
 {
-	if (EmptySlotNum == 0) return ERROR;//检测是否还有剩余的技能槽
+	if (EmptySlotNum == 0) return false;//检测是否还有剩余的技能槽
 	Skills* newSkill = SkillAdder(id);
-	if (newSkill == nullptr) return ERROR;//检测输入id的合法性
+	if (newSkill == nullptr) return false;//检测输入id的合法性
 	SkillSlot.push_back(newSkill);
-	return NORMAL;
+	return true;
 }
 
-int Unit::RemoveSkill(Skill_ID id)
+bool Unit::RemoveSkill(Skill_ID id)
 {
-	if (id == Skill_Attack)return ERROR;
+	if (id == Skill_Attack)return false;
 	std::vector<Unit*>::iterator mark = Opponent.end()+1;
 	for (auto it = Opponent.begin(); it != Opponent.end(); it++)
 		if ((*it)->GetID() == id)
@@ -99,21 +96,42 @@ int Unit::RemoveSkill(Skill_ID id)
 		}
 	if (mark != Opponent.end() + 1)
 		Opponent.erase(mark);
-	return NORMAL;
+	return true;
 }
 
-int Unit::AddOpponent(Unit* newopponent)
+bool Unit::AddOpponent(Unit* newopponent)
 {
-	if (OpponentNum >= 5) return ERROR;
+	if (OpponentNum >= 5) return false;
 	Opponent.push_back(newopponent);
 	OpponentNum++;
-	return NORMAL;
+	return true;
 }
 
-int Unit::UseSkill(int SlotofSkill)
+bool Unit::RemoveOpponent(Unit* opponent)
 {
-	if (SlotofSkill > SkillSlot.size()) return ERROR;//检测选中的技能槽是否有技能
-	if (skillpoint < SkillSlot[SlotofSkill]->GetSP())return ERROR;//检测选中的技能是否有足够的SP释放
+	bool test = false;
+	auto mark = Opponent.end();
+	for (auto it = Opponent.begin(); it != Opponent.end(); it++)
+	{
+		if ((*it)->GetName() == opponent->GetName())
+		{
+			mark = it;
+			test = true;
+			break;
+		}
+	}
+	if (test == true)
+	{
+		Opponent.erase(mark);
+		OpponentNum--;
+	}
+	return test;
+}
+
+bool Unit::UseSkill(int SlotofSkill)
+{
+	if (SlotofSkill > SkillSlot.size()) return false;//检测选中的技能槽是否有技能
+	if (skillpoint < SkillSlot[SlotofSkill]->GetSP())return false;//检测选中的技能是否有足够的SP释放
 	LastSkill = SkillSlot[SlotofSkill];
 	LastOpponent = Opponent;
 	for (auto& item : Opponent)
@@ -121,5 +139,5 @@ int Unit::UseSkill(int SlotofSkill)
 	OpponentNum = 0;
 	Opponent.clear();
 	skillpoint -= SkillSlot[SlotofSkill]->GetSP();
-	return NORMAL;
+	return true;
 }

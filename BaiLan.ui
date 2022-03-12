@@ -109,6 +109,19 @@
      <string>Attack</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="ConfirmButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>190</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Yes!</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="EnemyInfo">
    <property name="geometry">

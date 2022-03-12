@@ -57,7 +57,7 @@ BaiLan::BaiLan(QWidget* parent)
     ui.setupUi(this);
     InitGame();
     time = new QTimer();
-    time->setInterval(16);
+    time->setInterval(1);
     connect(time, SIGNAL(timeout()), this, SLOT(PlayerMovement()));
     time->start();
     
@@ -360,33 +360,90 @@ void BaiLan::PlayerMovement()
 
 void BaiLan::on_AttackButton_clicked()
 {
-    if (InBattle == true && PlayerControl == true)
+    if (InBattle == true && PlayerControl == true && SlotToUse != 0)
+    {
         SlotToUse = 0;
+        SkillChosen = true;
+        AddInformation("Skill Chosen: Attack");
+    }
+    else if (SkillChosen == true && SlotToUse == 0)
+    {
+        SlotToUse = -1;
+        SkillChosen = false;
+        AddInformation("Skill Unchosen: Attack");
+    }
+}
+
+void BaiLan::on_ConfirmButton_clicked()
+{
+    if (SkillChosen == true && Player->OpponentNum > 0)
+    {
+        Player->UseSkill(SlotToUse);
+        UseSkill = true;
+        SlotToUse = -1;
+        SkillChosen = false;
+    }
+    else
+        AddInformation("Failed to do so!");
 }
 
 void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
+    bool test = false;
+    bailan->MouseX = event->scenePos().x();
+    bailan->MouseY = event->scenePos().y();
     if (bailan->PlayerControl == true)
     {
-        int x = event->scenePos().x();
-        int y = event->scenePos().y();
         for (auto item : bailan->battle->GetUnit())
         {
-            if (x<item->BattleX * BlockSize + item->SizeX &&
-                x>item->BattleX * BlockSize &&
-                y<item->BattleY * BlockSize + item->SizeY &&
-                y>item->BattleY * BlockSize)
+            if (bailan->MouseX <= item->BattleX * BlockSize + item->SizeX &&
+                bailan->MouseX >= item->BattleX * BlockSize &&
+                bailan->MouseX <= item->BattleY * BlockSize + item->SizeY &&
+                bailan->MouseX >= item->BattleY * BlockSize)
+            {
                 CurrentUnit = item;
+                bailan->MouseHaveUnit = true;
+                test = true;
+                break;
+            }
+        }
+        if (test == false)
+        {
+            CurrentUnit = nullptr;
+            bailan->MouseHaveUnit = false;
         }
     }
-
+    bailan->ui.MouseX->setNum(bailan->MouseX);
+    bailan->ui.MouseY->setNum(bailan->MouseY);
 }
 
 void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    if (CurrentUnit != nullptr)
-        bailan->Player->AddOpponent(CurrentUnit);
-    CurrentUnit = nullptr;
+    if (bailan->SkillChosen == true && bailan->MouseHaveUnit == true)
+    {
+        bool test = false;
+        for (auto item : bailan->Player->GetOpponent())
+        {
+            if (item->GetName() == CurrentUnit->GetName())
+            {
+                test = true;
+                bailan->Player->RemoveOpponent(CurrentUnit);
+                bailan->AddInformation("Removed Opponent: " + CurrentUnit->GetName());
+                break;
+            }
+        }
+        if (test == false)
+        {
+            bailan->Player->AddOpponent(CurrentUnit);
+            bailan->AddInformation("Added Opponent: " + CurrentUnit->GetName());
+        }
+    }
+    else if (bailan->SkillChosen == false && bailan->MouseHaveUnit == false)
+    {
+        bailan->Player->BattleX = bailan->MouseX / BlockSize;
+        bailan->Player->BattleY = bailan->MouseY / BlockSize;
+        bailan->DrawBattleUnit();
+    }
 }
 
 void MyGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)

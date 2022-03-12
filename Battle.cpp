@@ -57,7 +57,7 @@ void Battle::InBattle()
 	bl->DrawBattleMap();
 	bl->DrawBattleUnit();
 	bool test = true;
-	while (test==true)
+	while (test == true)
 	{
 		for (int i = 0; i < BattleUnit.size(); i++)//操作，具体函数待定
 		{
@@ -102,7 +102,7 @@ void Battle::InBattle()
 			bl->ChangeUIPlayerHP(BattleUnit[0]->GetHP());
 			bl->DrawBattleUnit();
 			QEventLoop loop;//这一片段用于延迟一段时间，具体取决于下面第一个参数，单位为ms
-			QTimer::singleShot(1000, &loop, SLOT(quit()));
+			QTimer::singleShot(500, &loop, SLOT(quit()));
 			loop.exec();
 		}
 	}
@@ -127,14 +127,15 @@ void Battle::PlayerControl(Unit* player)
 	//		player->AddOpponent(opponent);
 	//		break;
 	//	}
-	while (bl->GetSlot() == -1)
+	while (bl->UseSkill != true)
 	{
 		QEventLoop loop;
 		QTimer::singleShot(50, &loop, SLOT(quit()));
 		loop.exec();
 	}
-	player->UseSkill(bl->GetSlot());
-	bl->ResetSlot();
+	//player->UseSkill(bl->GetSlot());
+	bl->UseSkill = false;
+	//bl->ResetSlot();
 }
 
 bool Battle::testwin()

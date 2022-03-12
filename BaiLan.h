@@ -81,6 +81,7 @@ public:
     Map_ID GetMap() { return CurrentMap; }
 
     bool EncounterEnemy();
+    bool UseSkill = false;
     void StartBattle();
     void KillEnemy();
     void ChangeControl();
@@ -98,11 +99,14 @@ private:
     bool PlayerWin = true;
 
     bool Test_Wall(Direction dir);
+    bool SkillChosen = false;//记录是否已经选择了技能
+    bool MouseHaveUnit = false;//记录鼠标所在位置是否有单位
 
     bool Key_W = false;
     bool Key_A = false;
     bool Key_S = false;
     bool Key_D = false;
+
 
     Ui::BaiLanClass ui;
 
@@ -121,6 +125,7 @@ private:
 public slots:
     void PlayerMovement();
     void on_AttackButton_clicked();
+    void on_ConfirmButton_clicked();
 
 };
 

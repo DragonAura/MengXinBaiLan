@@ -15,7 +15,7 @@ class Skills
 public:
 	Skills(Skill_ID id, int level = 1, int max = 1) :skill_id(id), skill_level(level), MaxOpponent(max) {}//构造技能的函数
 	virtual ~Skills(){}
-	virtual int UseSkill(Unit* opponent, Unit* user, int number) = 0;//提供释放接口，技能的具体效果应当在UseSkill函数中完成
+	virtual bool UseSkill(Unit* opponent, Unit* user, int number) = 0;//提供释放接口，技能的具体效果应当在UseSkill函数中完成
 	Skill_ID GetSkillID();
 	int GetSP() { return SkillPoint; }
 	QString GetName() { return name; }
@@ -30,19 +30,11 @@ protected:
 
 };
 
-class SkillExample :public Skills//该技能为示范技能，后续所有技能应当按照该模板编写
-{
-public:
-	SkillExample(int lvl, int max) :Skills(Skill_Example, lvl, max) {}
-	~SkillExample() {}
-	int UseSkill(Unit* opponent, Unit* user, int number);
-
-};
 
 class SkillAttack :public Skills
 {
 public:
 	SkillAttack(int lvl = 1, int max = 1) :Skills(Skill_Attack, lvl, max) { SkillPoint = -10; name = "Attack"; }
 	~SkillAttack() {}
-	int UseSkill(Unit* opponent, Unit* user, int number);
+	bool UseSkill(Unit* opponent, Unit* user, int number);
 };

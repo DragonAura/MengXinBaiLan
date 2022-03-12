@@ -39,10 +39,12 @@ public:
 	bool Alive() { return health > 0 ? true : false; }
 
 //技能相关的函数
-	int AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用
-	int RemoveSkill(Skill_ID id);//给定SkillID，删除Unit的技能
-	int UseSkill(int slot);//每个技能被有其槽的位置，给定slot，使用对应的技能
-	int AddOpponent(Unit* opponent);//释放技能之前要求先添加对象
+	bool AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用
+	bool RemoveSkill(Skill_ID id);//给定SkillID，删除Unit的技能
+	bool UseSkill(int slot);//每个技能被有其槽的位置，给定slot，使用对应的技能
+	bool AddOpponent(Unit* opponent);//释放技能之前要求先添加对象
+	bool RemoveOpponent(Unit* opponent);
+	std::vector<Unit*> GetOpponent() { return Opponent; }
 
 //更改数据相关的函数接口
 	void ChangeHp(int hp);//提供更改内部数据的接口，其中hp、atk可为负
@@ -59,6 +61,7 @@ public:
 	int SizeX, SizeY;//记录某Unit的贴图大小，主要用于遇敌检测，以pixel记录
 	Skills* LastSkill;
 	std::vector<Unit*>LastOpponent;
+	int OpponentNum;
 
 protected:
 	int MaxHP;
@@ -73,7 +76,6 @@ protected:
 	std::vector<Skills*>SkillSlot;//使用vector来记录一个Unit所具有的技能
 	std::vector<Unit*>Opponent;//使用vector记录某次技能所锁定的对象
 	int EmptySlotNum;
-	int OpponentNum;
 	int X, Y;//记录某Unit在当前Explore地图的XY位置，应当以Pixel（即960x960）记录，而非Block记录
 	Map_ID Map;//记录Unit当前所在的地图
 	
