@@ -445,8 +445,8 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
     else if (bailan->SkillChosen == false && bailan->MouseHaveUnit == false)
     {
-        bailan->Player->BattleX = bailan->MouseX / BlockSize;
-        bailan->Player->BattleY = bailan->MouseY / BlockSize;
+        bailan->Player->BattleX = bailan->MouseX;
+        bailan->Player->BattleY = bailan->MouseY;
         bailan->DrawBattleUnit();
     }
 
