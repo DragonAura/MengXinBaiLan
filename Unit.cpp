@@ -11,6 +11,16 @@ Skills* SkillAdder(Skill_ID id)//要求每次在Skills.h的enum里添加新技�
 	return skill;
 }
 
+void Unit::ResetPos(Map_ID id)
+{
+	switch (id)
+	{
+	case Map_MAP1:
+		X = 19 * BlockSize, Y = 19 * BlockSize;
+		break;
+	}
+}
+
 Unit::Unit(int hp, int atk, int exp, int lvl, Unit_ID id, int slotnumber,int sizex,int sizey)//Unit的构造函数，效果为将Unit初始化；位置没有专门初始化，需要在构造之后手动设置
 {
 	Opponent.clear();
@@ -136,6 +146,11 @@ bool Unit::RemoveOpponent(Unit* opponent)
 bool Unit::testOpp(int slot)
 {
 	return SkillSlot[slot]->MaxOpp() > OpponentNum ? true : false;
+}
+
+bool Unit::testself(int slot)
+{
+	return SkillSlot[slot]->self;
 }
 
 bool Unit::UseSkill(int SlotofSkill)

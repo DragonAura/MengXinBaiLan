@@ -14,6 +14,9 @@ QImage GetObjImg(Object_ID id)
     case Object_AIR:
         Image.load(":/image/air.jpg");
         break;
+    case Object_HEALER:
+        Image.load(":/image/healer.jpg");
+        break;
     default:
         Image.load(":/image/black.jpg");
         break;
@@ -60,7 +63,12 @@ BaiLan::BaiLan(QWidget* parent)
     time->setInterval(1);
     connect(time, SIGNAL(timeout()), this, SLOT(PlayerMovement()));
     time->start();
-    
+
+}
+
+void BaiLan::closeEvent(QCloseEvent* event)
+{
+    exit(0);
 }
 
 int GetLength(int num)
@@ -118,9 +126,56 @@ void BaiLan::keyReleaseEvent(QKeyEvent* event)
     }
 }
 
+void BaiLan::TestHeal()
+{
+    Explore* map;
+    for (auto item : Maps)
+        if (item->GetID() == CurrentMap)
+        {
+            map = item;
+            break;
+        }
+    if (map->GetObject(Player->GetX() / BlockSize, Player->GetY() / BlockSize) == Object_HEALER && Player->Full() == false)
+    {
+        Player->Heal();
+        ResetMap();
+        AddInformation("Player " + Player->GetName() + " is healed, and all the enemies are summoned. ");
+        RefreshHp();
+        DrawMap();
+    }
+}
+
+void BaiLan::RefreshHp()
+{
+    ui.HpLabel->setNum(Player->GetHP());
+}
+
+void BaiLan::RefreshSp()
+{
+    ui.SpLabel->setNum(Player->GetSP());
+}
+
+void BaiLan::RefreshMap()
+{
+    ui.MapLabel->setText(Mapname(CurrentMap));
+}
+
 void BaiLan::AddMap(Map_ID id)
 {
     Maps.push_back(MapGenerator(id));
+}
+
+void BaiLan::ResetMap()
+{
+    for (auto& item : Maps)
+    {
+        if (item->GetID() == CurrentMap)
+        {
+            item = MapGenerator(CurrentMap);
+            Player->ResetPos(CurrentMap);
+            break;
+        }
+    }
 }
 
 void BaiLan::DrawMap()//画出以CurrentMap为ID的地图
@@ -299,13 +354,18 @@ void BaiLan::InitGame()
     while (!ok || playername.isEmpty())
         playername = QInputDialog::getText(this, tr("请输入你的名字"), tr("你的名字："), QLineEdit::Normal, 0, &ok);
     Player->SetName(playername);
-    Player->ChangePosition(480, 480, Map_MAP1);
+    Player->ResetPos(CurrentMap);
+    Juqing1();
     this->grabKeyboard();
     ui.UnitView->setStyleSheet("background: transparent;border:0px");
     setFocusPolicy(Qt::StrongFocus);
+    RefreshHp();
+    RefreshSp();
+    RefreshMap();
     DrawMap();
     DrawUnit();
     setMouseTracking(true);
+    
 }
 
 bool BaiLan::Test_Wall(Direction dir)
@@ -352,6 +412,7 @@ void BaiLan::PlayerMovement()
     if (Key_A == true && Test_Wall(Left) == false)Player->ChangePosition(-1, 0);
     if (Key_S == true && Test_Wall(Down) == false)Player->ChangePosition(0, 1);
     if (Key_D == true && Test_Wall(Right) == false)Player->ChangePosition(1, 0);
+    TestHeal();
     DrawUnit();
     if (EncounterEnemy())
         StartBattle();
@@ -365,18 +426,13 @@ void BaiLan::on_AttackButton_clicked()
         SkillChosen = true;
         AddInformation("Action Chosen: Attack");
     }
-    else if (SkillChosen == true && SlotToUse == 0)
+    else if (InBattle == true && PlayerControl == true && SkillChosen == true && SlotToUse == 0)
     {
         SlotToUse = -1;
         SkillChosen = false;
         Player->ClearOpponent();
         AddInformation("Action Discarded: Attack");
     }
-}
-
-void BaiLan::on_MoveButton_clicked()
-{
-
 }
 
 void BaiLan::on_Skill1Button_clicked()
@@ -387,14 +443,14 @@ void BaiLan::on_Skill1Button_clicked()
         SkillChosen = true;
         AddInformation("Action Chosen: Skill 1(" + Player->SkillName(1) + ")");
     }
-    else if (SkillChosen == true && SlotToUse == 1)
+    else if (InBattle == true && PlayerControl == true && SkillChosen == true && SlotToUse == 1)
     {
         SlotToUse = -1;
         SkillChosen = false;
         Player->ClearOpponent();
         AddInformation("Action Discarded: Skill 1(" + Player->SkillName(1) + ")");
     }
-    else if (Player->SkillUsable(1) == false)
+    else if (InBattle == true && PlayerControl == true && Player->SkillUsable(1) == false)
     {
         AddInformation("There isn't such a skill! ");
     }
@@ -408,14 +464,14 @@ void BaiLan::on_Skill2Button_clicked()
         SkillChosen = true;
         AddInformation("Action Chosen: Skill 2(" + Player->SkillName(2) + ")");
     }
-    else if (SkillChosen == true && SlotToUse == 2)
+    else if (InBattle == true && PlayerControl == true && SkillChosen == true && SlotToUse == 2)
     {
         SlotToUse = -1;
         SkillChosen = false;
         Player->ClearOpponent();
         AddInformation("Action Discarded: Skill 2(" + Player->SkillName(2) + ")");
     }
-    else if (Player->SkillUsable(2) == false)
+    else if (InBattle == true && PlayerControl == true && Player->SkillUsable(2) == false)
     {
         AddInformation("There isn't such a skill! ");
     }
@@ -429,14 +485,14 @@ void BaiLan::on_Skill3Button_clicked()
         SkillChosen = true;
         AddInformation("Action Chosen: Skill 3(" + Player->SkillName(3) + ")");
     }
-    else if (SkillChosen == true && SlotToUse == 1)
+    else if (InBattle == true && PlayerControl == true && SkillChosen == true && SlotToUse == 1)
     {
         SlotToUse = -1;
         SkillChosen = false;
         Player->ClearOpponent();
         AddInformation("Action Discarded: Skill 3(" + Player->SkillName(3) + ")");
     }
-    else if (Player->SkillUsable(3) == false)
+    else if (InBattle == true && PlayerControl == true && Player->SkillUsable(3) == false)
     {
         AddInformation("There isn't such a skill! ");
     }
@@ -450,14 +506,14 @@ void BaiLan::on_Skill4Button_clicked()
         SkillChosen = true;
         AddInformation("Action Chosen: Skill 4(" + Player->SkillName(4) + ")");
     }
-    else if (SkillChosen == true && SlotToUse == 4)
+    else if (InBattle == true && PlayerControl == true && SkillChosen == true && SlotToUse == 4)
     {
         SlotToUse = -1;
         SkillChosen = false;
         Player->ClearOpponent();
         AddInformation("Action Discarded: Skill 4(" + Player->SkillName(4) + ")");
     }
-    else if (Player->SkillUsable(4) == false)
+    else if (InBattle == true && PlayerControl == true && Player->SkillUsable(4) == false)
     {
         AddInformation("There isn't such a skill! ");
     }
@@ -465,15 +521,21 @@ void BaiLan::on_Skill4Button_clicked()
 
 void BaiLan::on_ConfirmButton_clicked()
 {
-    if (SkillChosen == true && Player->OpponentNum > 0)
+    if (InBattle == true && PlayerControl == true && SkillChosen == true && Player->OpponentNum > 0)
     {
         Player->UseSkill(SlotToUse);
         UseSkill = true;
         SlotToUse = -1;
         SkillChosen = false;
     }
-    else
-        AddInformation("You haven't chosen your skill yet!");
+    else if (InBattle == true && PlayerControl == true && SkillChosen == false || Player->OpponentNum == 0)
+    {
+        AddInformation("Failed!");
+    }
+    else if (InBattle == false)
+    {
+        AddInformation("It's not in a battle now!");
+    }
 }
 
 void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
@@ -521,8 +583,13 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
         }
         if (test == false&&bailan->Player->testOpp(bailan->SlotToUse) == true)
         {
-            bailan->Player->AddOpponent(CurrentUnit);
-            bailan->AddInformation("Added Opponent: " + CurrentUnit->GetName());
+            if ((CurrentUnit->GetID() != Unit_Player && bailan->Player->testself(bailan->SlotToUse) == false) || (CurrentUnit->GetID() == Unit_Player && bailan->Player->testself(bailan->SlotToUse) == true))
+            {
+                bailan->Player->AddOpponent(CurrentUnit);
+                bailan->AddInformation("Added Opponent: " + CurrentUnit->GetName());
+            }
+            else
+                bailan->AddInformation("You can't use this skill to this unit!");
         }
         else if (test == false && bailan->Player->testOpp(bailan->SlotToUse) == false)
         {
@@ -541,4 +608,21 @@ void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void MyGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     
+}
+
+void Juqing1()
+{
+    Story juqing;
+    juqing.show();
+    juqing.AddStory("这里是摆烂的剧情hhh");
+    QEventLoop loop;
+    QTimer::singleShot(1000, &loop, SLOT(quit()));
+    loop.exec();
+    juqing.AddStory("由于是测试版所以剧情还没编出来（bushi）");
+    QTimer::singleShot(1000, &loop, SLOT(quit()));
+    loop.exec();
+    juqing.AddStory("希望大家玩得开心！");
+    QTimer::singleShot(1000, &loop, SLOT(quit()));
+    loop.exec();
+    juqing.close();
 }

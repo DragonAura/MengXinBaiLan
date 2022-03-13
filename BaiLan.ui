@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>BaiLan</string>
+   <string>摆大烂！</string>
   </property>
   <widget class="QGraphicsView" name="GraphicsView">
    <property name="geometry">
@@ -136,7 +136,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QGroupBox" name="EnemyInfo">
+  <widget class="QGroupBox" name="Info">
    <property name="geometry">
     <rect>
      <x>1330</x>
@@ -148,120 +148,73 @@
    <property name="title">
     <string>Info</string>
    </property>
-   <widget class="QLabel" name="HpLabel">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>91</width>
-      <height>16</height>
+      <x>10</x>
+      <y>20</y>
+      <width>161</width>
+      <height>161</height>
      </rect>
     </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TextSP">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>90</y>
-      <width>91</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PlayerSkillPoint</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="SpLabel">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>110</y>
-      <width>151</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TextHP">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>71</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PlayerHealth</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="TextHP">
+       <property name="text">
+        <string>PlayerHealth</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="HpLabel">
+       <property name="text">
+        <string>100</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="TextSP">
+       <property name="text">
+        <string>PlayerSkillPoint</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="SpLabel">
+       <property name="text">
+        <string>100</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="TextMap">
+       <property name="text">
+        <string>Map</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="MapLabel">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QTextEdit" name="Information">
    <property name="geometry">
     <rect>
      <x>1080</x>
-     <y>360</y>
+     <y>10</y>
      <width>491</width>
-     <height>311</height>
+     <height>661</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
    </property>
-  </widget>
-  <widget class="QScrollArea" name="scrollArea">
-   <property name="geometry">
-    <rect>
-     <x>1329</x>
-     <y>199</y>
-     <width>241</width>
-     <height>151</height>
-    </rect>
-   </property>
-   <property name="widgetResizable">
-    <bool>true</bool>
-   </property>
-   <widget class="QWidget" name="scrollAreaWidgetContents">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>239</width>
-      <height>149</height>
-     </rect>
-    </property>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>53</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>火球</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>40</y>
-       <width>53</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>疾风</string>
-     </property>
-    </widget>
-   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

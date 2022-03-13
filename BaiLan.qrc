@@ -5,5 +5,6 @@
         <file>wall.jpg</file>
         <file>Enemy_Demon.png</file>
         <file>Enemy_Slime.png</file>
+        <file>healer.jpg</file>
     </qresource>
 </RCC>

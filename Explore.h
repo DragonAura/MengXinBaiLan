@@ -11,13 +11,15 @@ enum Object_ID//记录地图上可能出现的物体
 {
 	Object_GRASS,//默认状态下为Grass，表示无特殊规则，可正常行走
 	Object_AIR,
-	Object_WALL
+	Object_WALL,
+	Object_HEALER
 	
 };
 
 class Unit;//对Unit类做声明
 
 Explore* MapGenerator(Map_ID id);
+QString Mapname(Map_ID id);
 
 void standard(int& x, int& y);//将输入的参数变为标准的前小后大
 

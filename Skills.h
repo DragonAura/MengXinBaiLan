@@ -20,6 +20,7 @@ public:
 	int GetSP() { return SkillPoint; }
 	QString GetName() { return name; }
 	int MaxOpp() { return MaxOpponent; }
+	bool self;
 
 protected:
 	Unit SelectedTarget;//选取所需释放技能的对象
@@ -35,7 +36,7 @@ protected:
 class SkillAttack :public Skills
 {
 public:
-	SkillAttack(int lvl = 1, int max = 1) :Skills(Skill_Attack, lvl, max) { SkillPoint = -10; name = "Attack"; }
+	SkillAttack(int lvl = 1, int max = 1) :Skills(Skill_Attack, lvl, max) { SkillPoint = -10; name = "Attack"; self = false; }
 	~SkillAttack() {}
 	void UseSkill(Unit* opponent, Unit* user, int number);
 };

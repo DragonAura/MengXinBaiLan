@@ -36,31 +36,37 @@ public:
 	int GetHP() { return health; }
 	int GetATK() { return attack; }
 	int GetXP() { return MaxEXP; }
+	int GetSP() { return skillpoint; }
 	QString GetName() { return name; }
 	bool Alive() { return health > 0 ? true : false; }
 	QString SkillName(int slot);
-	bool SkillUsable(int slot) { return slot > (4 - EmptySlotNum) ? false : true; }
+	bool SkillUsable(int slot) { return slot > (4 - EmptySlotNum) ? false : true; }//检测选中的槽位技能是否存在于技能槽里
+	bool Full() { return health == MaxHP ? true : false; }
 
 //技能相关的函数
 	bool AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用
 	bool RemoveSkill(Skill_ID id);//给定SkillID，删除Unit的技能
 	bool UseSkill(int slot);//每个技能被有其槽的位置，给定slot，使用对应的技能
 	bool AddOpponent(Unit* opponent);//释放技能之前要求先添加对象
-	bool RemoveOpponent(Unit* opponent);
+	bool RemoveOpponent(Unit* opponent);//删除某个对象
 	std::vector<Unit*> GetOpponent() { return Opponent; }
-	void ClearOpponent() { Opponent.clear(); OpponentNum = 0; }
-	bool testOpp(int slot);
+	void ClearOpponent() { Opponent.clear(); OpponentNum = 0; }//清除现有的所有对象
+	bool testOpp(int slot);//检测是否还可能选中新的对象
+	bool testself(int slot);//检测技能是否允许对自己释放
 
 //更改数据相关的函数接口
+	void Heal() { health = MaxHP; }
 	void ChangeHp(int hp);//提供更改内部数据的接口，其中hp、atk可为负
 	void ChangeAtk(int atk);
 	void ChangeEXP(int exp);
 
 	bool LevelUp();//每次战斗之后都应当调用这个函数
 
-//关于玩家移动的两种函数重载
+//关于玩家移动的函数重载
 	void ChangePosition(int x, int y, Map_ID map);//切换地图时或者初次定义时要求使用该函数，此时的xy为绝对位置
 	void ChangePosition(int x, int y);//不切换地图在同一地图移动时应当使用该函数，此时的xy为相对位移
+
+	void ResetPos(Map_ID id);//会将玩家传送到Healer所在位置，仅限玩家使用
 
 	int BattleX, BattleY;//记录某Unit在当前Battle地图的XY位置，应当以Block（24x24）记录
 	int SizeX, SizeY;//记录某Unit的贴图大小，主要用于遇敌检测，以pixel记录

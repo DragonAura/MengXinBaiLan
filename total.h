@@ -6,3 +6,5 @@
 #include"Explore.h"
 #include"Unit.h"
 #include"Skills.h"
+#include"GameStart.h"
+#include"Story.h"

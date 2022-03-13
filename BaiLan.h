@@ -12,6 +12,7 @@
 #include<QGraphicsProxyWidget>
 #include<QMouseEvent>
 #include<QGraphicsSceneMouseEvent>
+#include<QCloseEvent>
 #include "ui_BaiLan.h"
 
 enum Object_ID;
@@ -53,12 +54,17 @@ public:
 
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
+    void closeEvent(QCloseEvent* event);
 
     void ResetKey();
 
     void AddMap(Map_ID id);
+    void ResetMap();
+    void TestHeal();
 
-    void ChangeUIPlayerHP(int hp) { ui.HpLabel->setNum(hp); }
+    void RefreshHp();
+    void RefreshSp();
+    void RefreshMap();
 
     int GetSlot() { return SlotToUse; }
     void ResetSlot() { SlotToUse = -1; }
@@ -123,7 +129,6 @@ public slots:
     void PlayerMovement();
     void on_AttackButton_clicked();
     void on_ConfirmButton_clicked();
-    void on_MoveButton_clicked();
     void on_Skill1Button_clicked();
     void on_Skill2Button_clicked();
     void on_Skill3Button_clicked();
@@ -144,3 +149,5 @@ public:
     MyGraphicsScene(BaiLan* bl) :bailan(bl) {}
 
 };
+
+void Juqing1();

@@ -95,7 +95,8 @@ void Battle::InBattle()
 			//		break;
 			//	}
 			//item->UseSkill(0);
-			bl->ChangeUIPlayerHP(BattleUnit[0]->GetHP());
+			bl->RefreshHp();
+			bl->RefreshSp();
 			bl->DrawBattleUnit();
 			QEventLoop loop;//这一片段用于延迟一段时间，具体取决于下面第一个参数，单位为ms
 			QTimer::singleShot(500, &loop, SLOT(quit()));
@@ -145,7 +146,7 @@ bool Battle::testwin()
 		if ((*it)->GetID() == Unit_Player && (*it)->Alive() == false)
 		{
 			BattleUnit[0]->ChangeEXP(-INT_MAX);
-			BattleUnit[0]->ChangePosition(480, 480, bl->GetMap());//死亡后将玩家送回初始位置
+			BattleUnit[0]->ResetPos(bl->GetMap());//死亡后将玩家送回初始位置
 			bl->AddInformation("Player " + (*it)->GetName() + " dies and loses all of his exp. ");
 			return true;
 		}
@@ -154,7 +155,7 @@ bool Battle::testwin()
 	}
 	if (mark != BattleUnit.end())
 	{
-		bl->AddInformation((*mark)->GetName() + " Dies");
+		bl->AddInformation((*mark)->GetName() + " dies. ");
 		BattleUnit[0]->ChangeEXP((*mark)->GetXP());
 		delete (*mark);
 		BattleUnit.erase(mark);

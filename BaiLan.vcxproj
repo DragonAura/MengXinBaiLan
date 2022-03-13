@@ -85,6 +85,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameStart.cpp" />
+    <ClCompile Include="Story.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Skills.cpp" />
     <QtRcc Include="BaiLan.qrc" />
@@ -94,11 +96,15 @@
     <ClCompile Include="Battle.cpp" />
     <ClCompile Include="Explore.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="Story.ui" />
+    <QtUic Include="GameStart.ui" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battle.h" />
     <ClInclude Include="DEFINE.h" />
     <ClInclude Include="Explore.h" />
+    <QtMoc Include="Story.h" />
+    <QtMoc Include="GameStart.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Skills.h" />
     <ClInclude Include="total.h" />

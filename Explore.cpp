@@ -1,10 +1,21 @@
-#include"total.h"
+﻿#include"total.h"
 
 void standard(int& x, int& y)
 {
 	int temp = x;
 	x = x < y ? x : y;
 	y = temp > y ? temp : y;
+}
+
+QString Mapname(Map_ID id)
+{
+	QString text;
+	switch (id)
+	{
+	case Map_MAP1:
+		text = "第0关 摆烂草地";
+	}
+	return text;
 }
 
 Explore* MapGenerator(Map_ID id)
@@ -18,9 +29,11 @@ Explore* MapGenerator(Map_ID id)
 		map->SetObject(1, 1, 1, 40, Object_WALL);
 		map->SetObject(40, 40, 40, 1, Object_WALL);
 		map->SetObject(40, 40, 1, 40, Object_WALL);
-		map->SetObject(20, 20, Object_WALL);
+		map->SetObject(20, 20, Object_HEALER);
 		map->AddEnemy(300, 300, Map_MAP1, Unit_Enemy_Demon, 20, 1, 20, 1, 1);
-		map->AddEnemy(600, 300, Map_MAP1, Unit_Enemy_Slime, 10, 5, 20, 1, 1, 24, 24);
+		map->AddEnemy(600, 300, Map_MAP1, Unit_Enemy_Slime, 7, 5, 20, 1, 1, 24, 24);
+		map->AddEnemy(300, 600, Map_MAP1, Unit_Enemy_Demon, 20, 2, 30, 1, 1);
+		map->AddEnemy(600, 600, Map_MAP1, Unit_Enemy_Slime, 7, 10, 40, 2, 1, 24, 24);
 		break;
 	}
 	return map;
