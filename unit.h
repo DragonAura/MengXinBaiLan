@@ -3,6 +3,7 @@
 #include<QString>
 
 class Battle;
+class Skills;
 
 enum Skill_ID;
 
@@ -37,6 +38,8 @@ public:
 	int GetXP() { return MaxEXP; }
 	QString GetName() { return name; }
 	bool Alive() { return health > 0 ? true : false; }
+	QString SkillName(int slot);
+	bool SkillUsable(int slot) { return slot > (4 - EmptySlotNum) ? false : true; }
 
 //技能相关的函数
 	bool AddSkill(Skill_ID id);//给定SkillID，给Unit添加技能，返回值int起到判断是否成功增加的作用

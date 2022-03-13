@@ -66,8 +66,6 @@ void Battle::InBattle()
 			if (BattleUnit[i]->GetID() != Unit_Player)
 			{
 				AiControl(BattleUnit[i]);
-				bl->ChangeUIEnemyHealth(BattleUnit[i]->GetHP());
-				bl->ChangeUIEnemyName(BattleUnit[i]->GetName());
 				QString opponent;
 				for (auto opp : BattleUnit[i]->LastOpponent)
 					opponent = opponent + opp->GetName() + ", ";
@@ -75,8 +73,6 @@ void Battle::InBattle()
 			}
 			else
 			{
-				bl->ChangeUIEnemyHealth(" ");
-				bl->ChangeUIEnemyName(" ");
 				bl->ChangeControl();
 				PlayerControl(BattleUnit[i]);
 				QString opponent;

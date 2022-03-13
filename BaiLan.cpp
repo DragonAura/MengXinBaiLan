@@ -261,7 +261,6 @@ void BaiLan::StartBattle()
     InBattle = false;
     if (Player->LevelUp())ui.Information->append(Player->GetName() + " Level up! ");
     ui.HpLabel->setNum(Player->GetHP());
-    ui.testlabel->setText("遇敌！");
     if (Player->Alive())
         KillEnemy();
 }
@@ -364,14 +363,103 @@ void BaiLan::on_AttackButton_clicked()
     {
         SlotToUse = 0;
         SkillChosen = true;
-        AddInformation("Skill Chosen: Attack");
+        AddInformation("Action Chosen: Attack");
     }
     else if (SkillChosen == true && SlotToUse == 0)
     {
         SlotToUse = -1;
         SkillChosen = false;
         Player->ClearOpponent();
-        AddInformation("Skill Unchosen: Attack");
+        AddInformation("Action Discarded: Attack");
+    }
+}
+
+void BaiLan::on_MoveButton_clicked()
+{
+
+}
+
+void BaiLan::on_Skill1Button_clicked()
+{
+    if (InBattle == true && PlayerControl == true && SlotToUse != 1 && Player->SkillUsable(1) == true)
+    {
+        SlotToUse = 1;
+        SkillChosen = true;
+        AddInformation("Action Chosen: Skill 1(" + Player->SkillName(1) + ")");
+    }
+    else if (SkillChosen == true && SlotToUse == 1)
+    {
+        SlotToUse = -1;
+        SkillChosen = false;
+        Player->ClearOpponent();
+        AddInformation("Action Discarded: Skill 1(" + Player->SkillName(1) + ")");
+    }
+    else if (Player->SkillUsable(1) == false)
+    {
+        AddInformation("There isn't such a skill! ");
+    }
+}
+
+void BaiLan::on_Skill2Button_clicked()
+{
+    if (InBattle == true && PlayerControl == true && SlotToUse != 2 && Player->SkillUsable(2) == true)
+    {
+        SlotToUse = 2;
+        SkillChosen = true;
+        AddInformation("Action Chosen: Skill 2(" + Player->SkillName(2) + ")");
+    }
+    else if (SkillChosen == true && SlotToUse == 2)
+    {
+        SlotToUse = -1;
+        SkillChosen = false;
+        Player->ClearOpponent();
+        AddInformation("Action Discarded: Skill 2(" + Player->SkillName(2) + ")");
+    }
+    else if (Player->SkillUsable(2) == false)
+    {
+        AddInformation("There isn't such a skill! ");
+    }
+}
+
+void BaiLan::on_Skill3Button_clicked()
+{
+    if (InBattle == true && PlayerControl == true && SlotToUse != 3 && Player->SkillUsable(3) == true)
+    {
+        SlotToUse = 1;
+        SkillChosen = true;
+        AddInformation("Action Chosen: Skill 3(" + Player->SkillName(3) + ")");
+    }
+    else if (SkillChosen == true && SlotToUse == 1)
+    {
+        SlotToUse = -1;
+        SkillChosen = false;
+        Player->ClearOpponent();
+        AddInformation("Action Discarded: Skill 3(" + Player->SkillName(3) + ")");
+    }
+    else if (Player->SkillUsable(3) == false)
+    {
+        AddInformation("There isn't such a skill! ");
+    }
+}
+
+void BaiLan::on_Skill4Button_clicked()
+{
+    if (InBattle == true && PlayerControl == true && SlotToUse != 4 && Player->SkillUsable(4) == true)
+    {
+        SlotToUse = 1;
+        SkillChosen = true;
+        AddInformation("Action Chosen: Skill 4(" + Player->SkillName(4) + ")");
+    }
+    else if (SkillChosen == true && SlotToUse == 4)
+    {
+        SlotToUse = -1;
+        SkillChosen = false;
+        Player->ClearOpponent();
+        AddInformation("Action Discarded: Skill 4(" + Player->SkillName(4) + ")");
+    }
+    else if (Player->SkillUsable(4) == false)
+    {
+        AddInformation("There isn't such a skill! ");
     }
 }
 
@@ -385,7 +473,7 @@ void BaiLan::on_ConfirmButton_clicked()
         SkillChosen = false;
     }
     else
-        AddInformation("Failed to do so!");
+        AddInformation("You haven't chosen your skill yet!");
 }
 
 void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
@@ -414,8 +502,6 @@ void MyGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
             bailan->MouseHaveUnit = false;
         }
     }
-    bailan->ui.MouseX->setNum(bailan->MouseX);
-    bailan->ui.MouseY->setNum(bailan->MouseY);
 }
 
 void MyGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* event)

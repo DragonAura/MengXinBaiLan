@@ -59,9 +59,6 @@ public:
     void AddMap(Map_ID id);
 
     void ChangeUIPlayerHP(int hp) { ui.HpLabel->setNum(hp); }
-    void ChangeUIEnemyName(QString name) { ui.NameEnemy->setText(name); }
-    void ChangeUIEnemyHealth(int hp) { ui.HealthEnemy->setNum(hp); }
-    void ChangeUIEnemyHealth(QString hp) { ui.HealthEnemy->setText(hp); }
 
     int GetSlot() { return SlotToUse; }
     void ResetSlot() { SlotToUse = -1; }
@@ -126,6 +123,11 @@ public slots:
     void PlayerMovement();
     void on_AttackButton_clicked();
     void on_ConfirmButton_clicked();
+    void on_MoveButton_clicked();
+    void on_Skill1Button_clicked();
+    void on_Skill2Button_clicked();
+    void on_Skill3Button_clicked();
+    void on_Skill4Button_clicked();
 
 };
 

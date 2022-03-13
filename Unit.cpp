@@ -75,6 +75,11 @@ void Unit::ChangePosition(int x, int y)
 	X += x, Y += y;
 }
 
+QString Unit::SkillName(int slot)
+{ 
+	return SkillSlot[slot]->GetName(); 
+}
+
 bool Unit::AddSkill(Skill_ID id)
 {
 	if (EmptySlotNum == 0) return false;//检测是否还有剩余的技能槽

@@ -35,19 +35,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="testlabel">
-   <property name="geometry">
-    <rect>
-     <x>1200</x>
-     <y>260</y>
-     <width>54</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>FPS:59</string>
-   </property>
-  </widget>
   <widget class="QGraphicsView" name="UnitView">
    <property name="geometry">
     <rect>
@@ -56,32 +43,6 @@
      <width>1000</width>
      <height>1000</height>
     </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="HPText">
-   <property name="geometry">
-    <rect>
-     <x>1200</x>
-     <y>280</y>
-     <width>54</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PlayerHP</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="HpLabel">
-   <property name="geometry">
-    <rect>
-     <x>1270</x>
-     <y>280</y>
-     <width>54</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>100</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="groupBox">
@@ -94,12 +55,12 @@
     </rect>
    </property>
    <property name="title">
-    <string>UseSkill</string>
+    <string>SelectMovement</string>
    </property>
    <widget class="QPushButton" name="AttackButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>90</x>
       <y>40</y>
       <width>75</width>
       <height>24</height>
@@ -112,14 +73,66 @@
    <widget class="QPushButton" name="ConfirmButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>90</x>
       <y>190</y>
       <width>75</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Yes!</string>
+     <string>Confirm</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Skill1Button">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>70</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Skill1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Skill2Button">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>100</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Skill2</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Skill3Button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>70</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Skill3</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Skill4Button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>100</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Skill4</string>
     </property>
    </widget>
   </widget>
@@ -133,48 +146,35 @@
     </rect>
    </property>
    <property name="title">
-    <string>EnemyInfo</string>
+    <string>Info</string>
    </property>
-   <widget class="QLabel" name="TextEnemy">
+   <widget class="QLabel" name="HpLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
+      <y>60</y>
       <width>91</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>CurrentEnemy</string>
+     <string>1</string>
     </property>
    </widget>
-   <widget class="QLabel" name="NameEnemy">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>141</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TextEnemyHealth">
+   <widget class="QLabel" name="TextSP">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>90</y>
-      <width>81</width>
+      <width>91</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>EnemyHealth</string>
+     <string>PlayerSkillPoint</string>
     </property>
    </widget>
-   <widget class="QLabel" name="HealthEnemy">
+   <widget class="QLabel" name="SpLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -185,6 +185,19 @@
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TextHP">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PlayerHealth</string>
     </property>
    </widget>
   </widget>
@@ -201,31 +214,54 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="MouseX">
+  <widget class="QScrollArea" name="scrollArea">
    <property name="geometry">
     <rect>
-     <x>1200</x>
-     <y>220</y>
-     <width>54</width>
-     <height>16</height>
+     <x>1329</x>
+     <y>199</y>
+     <width>241</width>
+     <height>151</height>
     </rect>
    </property>
-   <property name="text">
-    <string>0</string>
+   <property name="widgetResizable">
+    <bool>true</bool>
    </property>
-  </widget>
-  <widget class="QLabel" name="MouseY">
-   <property name="geometry">
-    <rect>
-     <x>1200</x>
-     <y>240</y>
-     <width>54</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>239</width>
+      <height>149</height>
+     </rect>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>53</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>火球</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>53</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>疾风</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
