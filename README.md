@@ -82,13 +82,13 @@
 
 首先选择开始游戏后进入输入名字的界面，任意输入自己的用户名即可。
 
-![image-20220313181011762](C:\Users\lyxal\AppData\Roaming\Typora\typora-user-images\image-20220313181011762.png)
+![BaiLan_TSGVsRdjj6](https://raw.githubusercontent.com/DragonAura/MengXinBaiLan/readme-pic/BaiLan_TSGVsRdjj6.png)
 
-![image-20220313181032973](C:\Users\lyxal\AppData\Roaming\Typora\typora-user-images\image-20220313181032973.png)
+![BaiLan_iCtSX3yBVi](https://raw.githubusercontent.com/DragonAura/MengXinBaiLan/readme-pic/BaiLan_iCtSX3yBVi.png)
 
 ## 界面简介
 
-![image-20220313181452221](C:\Users\lyxal\AppData\Roaming\Typora\typora-user-images\image-20220313181452221.png)
+![BaiLan_8WPy2APx7W](https://raw.githubusercontent.com/DragonAura/MengXinBaiLan/readme-pic/BaiLan_8WPy2APx7W.png)
 
 如图所示，整个游戏界面分为四部分，图形渲染界面用于渲染画面，信息输出界面用于输出各种文字信息，行动选择界面用于选择即将采取的行动，信息显示界面用于显示现在玩家的状态。
 
@@ -98,7 +98,7 @@
 
 图中有边缘的墙和中间的草地，墙在现版本中暂时不可越过；而草地则可以随意走动。
 
-![image-20220313181758478](C:\Users\lyxal\AppData\Roaming\Typora\typora-user-images\image-20220313181758478.png)
+![BaiLan_rRtIP5sbZc](https://raw.githubusercontent.com/DragonAura/MengXinBaiLan/readme-pic/BaiLan_rRtIP5sbZc.png)
 
 图中圈出部分是可交互要素。
 
@@ -114,7 +114,7 @@
 
 测试版的游戏采取最古老的回合制机制（之后可能会考虑加入速度机制），即每一个单位轮流采取行动。
 
-![image-20220313183124604](C:\Users\lyxal\AppData\Roaming\Typora\typora-user-images\image-20220313183124604.png)
+![BaiLan_qebYIsfwg5](https://raw.githubusercontent.com/DragonAura/MengXinBaiLan/readme-pic/BaiLan_qebYIsfwg5.png)
 
 如图所示，在战斗时，整体操作逻辑为选择要释放的技能-选择释放的对象-confirm释放技能。按照这个逻辑，就可以发动攻击。如果有恢复技能的话，也许甚至能给自己进行回复？
 
