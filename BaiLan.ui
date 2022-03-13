@@ -55,7 +55,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>SelectMovement</string>
+    <string>Select Action</string>
    </property>
    <widget class="QPushButton" name="AttackButton">
     <property name="geometry">
